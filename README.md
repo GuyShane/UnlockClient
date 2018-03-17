@@ -4,7 +4,7 @@
 This is a library to include in your frontend which will open a WebSocket connection to your Unlock enabled server and get you up and running with simple, socket-based authentication. If you haven't set up your server for Unlock yet, check out [the website](https://www.unlock-auth.com/documentation) for more information and documentation.
 
 ### Installing
-Download [unlock.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/unlock.css) and [unlock.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/unlock.js) and include them in your webpage, then include them in the relevant places
+Download [unlock.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.css) and [unlock.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.js) and include them in your webpage, then include them in the relevant places
 ```html
 ...
 <link rel="stylesheet" href="unlock.css" />
