@@ -61,3 +61,23 @@
     opacity: 1; }
   #unlock-button.unlock-disabled #unlock-spinner {
     opacity: 1; }
+e 1.2s ease-in-out 0s infinite normal;
+              animation: move 1.2s ease-in-out 0s infinite normal; }
+    #unlock-button #unlock-spinner #unlock-dot-two {
+      -webkit-animation: move 1.2s ease-in-out 0.4s infinite normal;
+              animation: move 1.2s ease-in-out 0.4s infinite normal;
+      -webkit-animation-fill-mode: backwards;
+              animation-fill-mode: backwards; }
+    #unlock-button #unlock-spinner #unlock-dot-three {
+      -webkit-animation: move 1.2s ease-in-out 0.79999s infinite normal;
+              animation: move 1.2s ease-in-out 0.79999s infinite normal;
+      -webkit-animation-fill-mode: backwards;
+              animation-fill-mode: backwards; }
+  #unlock-button.unlock-enabled #unlock-cover {
+    opacity: 0; }
+  #unlock-button.unlock-enabled #unlock-spinner {
+    opacity: 0; }
+  #unlock-button.unlock-disabled #unlock-cover {
+    opacity: 1; }
+  #unlock-button.unlock-disabled #unlock-spinner {
+    opacity: 1; }
