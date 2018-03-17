@@ -153,7 +153,10 @@
         var bg=self.color;
         var light=alter(self.color, true);
         var dark=alter(self.color, false);
-        var sheet=document.styleSheets[0];
+        var style=document.createElement('style');
+        style.appendChild(document.createTextNode(''));
+        document.head.appendChild(style);
+        var sheet=style.sheet;
         sheet.insertRule('#unlock-button {background-color: '+bg+'}', sheet.cssRules.length);
         sheet.insertRule('#unlock-button.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
         sheet.insertRule('#unlock-button.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
