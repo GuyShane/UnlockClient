@@ -1,0 +1,90 @@
+$dot-size: 12px;
+$dot-distance: 40px;
+$duration: 1.2s;
+$delay-two: $duration*0.333333;
+$delay-three: $duration*0.66666;
+
+@keyframes move {
+    0% {
+        transform: scale(0);
+        left: -$dot-distance/2;
+    }
+    20% {
+        transform: scale(1);
+        left: -$dot-distance/2;
+    }
+    90% {
+        transform: scale(1);
+        left: $dot-distance/2;
+    }
+    100% {
+        transform: scale(0);
+        left: $dot-distance/2;
+    }
+}
+
+#unlock-button {
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    padding: 7px 17px;
+    border-radius: 8px;
+    #unlock-logo {
+        width: 77px;
+        height: 18px;
+    }
+    #unlock-cover {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(76, 76, 76, 0.6);
+        border-radius: 8px;
+        transition: opacity 0.2s;
+    }
+    #unlock-spinner {
+        width: $dot-size;
+        height: $dot-size;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.2s;
+        .unlock-dot {
+            width: $dot-size;
+            height: $dot-size;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            left: 0px;
+        }
+        #unlock-dot-one {
+            animation: move $duration ease-in-out 0s infinite normal;
+        }
+        #unlock-dot-two {
+            animation: move $duration ease-in-out $delay-two infinite normal;
+            animation-fill-mode: backwards;
+        }
+        #unlock-dot-three {
+            animation: move $duration ease-in-out $delay-three infinite normal;
+            animation-fill-mode: backwards;
+        }
+    }
+    &.unlock-enabled {
+        #unlock-cover {
+            opacity: 0;
+        }
+        #unlock-spinner {
+            opacity: 0;
+        }
+    }
+    &.unlock-disabled {
+        #unlock-cover {
+            opacity: 1;
+        }
+        #unlock-spinner {
+            opacity: 1;
+        }
+    }
+}
