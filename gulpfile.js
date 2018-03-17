@@ -18,6 +18,17 @@ gulp.task('scss', ()=>{
         gulp.src('./src/unlock.scss'),
         sass({
             indentedSyntax: false,
+            sourceMap: false
+        }),
+        gulp.dest('./src/')
+    ]);
+});
+
+gulp.task('min-scss', ()=>{
+    pump([
+        gulp.src('./src/unlock.scss'),
+        sass({
+            indentedSyntax: false,
             sourceMap: false,
             outputStyle: 'compressed'
         }),
@@ -31,10 +42,10 @@ gulp.task('watch-js', ()=>{
 });
 
 gulp.task('watch-css', ()=>{
-    return gulp.watch('./src/unlock.scss', ['scss']);
+    return gulp.watch('./src/unlock.scss', ['scss', 'min-scss']);
 });
 
 gulp.task('js', ['uglify', 'watch-js']);
-gulp.task('css', ['scss', 'watch-css']);
+gulp.task('css', ['scss', 'min-scss', 'watch-css']);
 
 gulp.task('default', ['js', 'css']);
