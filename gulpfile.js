@@ -11,10 +11,10 @@ gulp.task('uglify', (cb)=>{
         uglify(),
         rename('unlock.min.js'),
         gulp.dest('./src/')
-    ]);
+    ], cb);
 });
 
-gulp.task('scss', ()=>{
+gulp.task('scss', (cb)=>{
     pump([
         gulp.src('./src/unlock.scss'),
         sass({
@@ -22,10 +22,10 @@ gulp.task('scss', ()=>{
             sourceMap: false
         }),
         gulp.dest('./src/')
-    ]);
+    ], cb);
 });
 
-gulp.task('min-scss', ()=>{
+gulp.task('min-scss', (cb)=>{
     pump([
         gulp.src('./src/unlock.scss'),
         sass({
@@ -35,15 +35,17 @@ gulp.task('min-scss', ()=>{
         }),
         rename('unlock.min.css'),
         gulp.dest('./src/')
-    ]);
+    ], cb);
 });
 
-gulp.task('prefix', ['scss', 'min-scss'], ()=>{
+gulp.task('prefix', ['scss', 'min-scss'], (cb)=>{
     pump([
         gulp.src(['./src/unlock.css', './src/unlock.min.css']),
-        prefix(),
+        prefix({
+            cascade: false
+        }),
         gulp.dest('./src/')
-    ]);
+    ], cb);
 });
 
 gulp.task('watch-js', ()=>{
