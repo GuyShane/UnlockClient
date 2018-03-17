@@ -2,18 +2,49 @@
     function Unlock(opts){
         var self=this;
 
+        opts=verify(opts, {
+            url: {
+                required: true,
+                type: 'string'
+            },
+            email: {
+                required: true,
+                type: 'string'
+            },
+            onMessage: {
+                required: true,
+                type: 'function'
+            },
+            button: {
+                required: false,
+                type: 'boolean',
+                default: true
+            },
+            color: {
+                required: false,
+                type: 'string',
+                default: '#2f81c6'
+            },
+            onOpen: {
+                required: false,
+                type: 'function',
+                default: function(){}
+            },
+            onClose: {
+                required: false,
+                type: 'function',
+                default: function(){}
+            }
+        });
+
         self.url=opts.url;
         self.email=opts.email;
-        self.button=opts.button||true;
-        self.color=opts.color||'#2f81c6';
+        self.button=opts.button;
+        self.color=opts.color;
 
-        self.onOpen=opts.onOpen||function(){};
-        self.onClose=opts.onClose||function(){};
-        self.onMessage=opts.onMessage||function(data){};
-
-        self.onUnlocked=opts.onUnlocked||function(data){};
-        self.onNotUnlocked=opts.onNotUnlocked||function(data){};
-        self.onError=opts.onError||function(data){};
+        self.onMessage=opts.onMessage;
+        self.onOpen=opts.onOpen;
+        self.onClose=opts.onClose;
 
         self.socket=new WebSocket(self.url);
         self.isOpen=false;
@@ -127,6 +158,37 @@
         sheet.insertRule('#unlock-button.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
         sheet.insertRule('#unlock-button.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
     };
+
+    function verify(obj, schema){
+        var ret={};
+        var key;
+        for (key in obj){
+            if (!obj.hasOwnProperty(key)){continue;}
+            if (typeof schema[key]==='undefined'){
+                throw new Error('Unrecognized option '+key);
+            }
+        }
+        for (key in schema){
+            if (!schema.hasOwnProperty(key)){continue;}
+            var reqs=schema[key];
+            var val=obj[key];
+            if (typeof val==='undefined'){
+                if (reqs.required){
+                    throw new Error('Value '+key+' must be defined and of type '+reqs.type);
+                }
+                else {
+                    ret[key]=reqs.default;
+                }
+            }
+            else {
+                if (typeof val!==reqs.type){
+                    throw new Error('Value '+key+' must be of type '+reqs.type);
+                }
+                ret[key]=val;
+            }
+        }
+        return ret;
+    }
 
     function alter(c, up){
         c=c.slice(1);
