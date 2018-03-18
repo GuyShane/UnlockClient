@@ -1,9 +1,18 @@
 const gulp=require('gulp');
+const lint=require('gulp-eslint');
 const uglify=require('gulp-uglify');
 const sass=require('gulp-sass');
 const prefix=require('gulp-autoprefixer');
 const rename=require('gulp-rename');
 const pump=require('pump');
+
+gulp.task('lint', (cb)=>{
+    pump([
+        gulp.src('./src/unlock.js'),
+        lint('.eslint.json'),
+        lint.format()
+    ], cb);
+});
 
 gulp.task('uglify', (cb)=>{
     pump([
@@ -48,15 +57,18 @@ gulp.task('prefix', ['scss', 'min-scss'], (cb)=>{
     ], cb);
 });
 
+const jsTasks=['uglify', 'lint'];
+const cssTasks=['scss', 'min-scss', 'prefix'];
+
 gulp.task('watch-js', ()=>{
-    return gulp.watch('./src/unlock.js', ['uglify']);
+    return gulp.watch('./src/unlock.js', jsTasks);
 });
 
 gulp.task('watch-css', ()=>{
-    return gulp.watch('./src/unlock.scss', ['scss', 'min-scss', 'prefix']);
+    return gulp.watch('./src/unlock.scss', cssTasks);
 });
 
-gulp.task('js', ['uglify', 'watch-js']);
-gulp.task('css', ['scss', 'min-scss', 'prefix', 'watch-css']);
+gulp.task('js', jsTasks.concat(['watch-js']));
+gulp.task('css', cssTasks.concat(['watch-css']));
 
 gulp.task('default', ['js', 'css']);
