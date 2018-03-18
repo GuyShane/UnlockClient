@@ -3,5 +3,4 @@ node_js:
  - "node"
  - "8"
 install:
- - npm install -g phantomjs
- - npm install -g mocha-phantomjs
+ - npm install

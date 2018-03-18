@@ -4,7 +4,7 @@
   "description": "A frontend javascript library for authenticating with Unlock",
   "main": "unlock.js",
   "scripts": {
-    "test": "mocha-phantomjs ./test/index.html"
+    "test": "./node_modules/mocha-phantomjs/bin/mocha-phantomjs ./test/index.html"
   },
   "repository": {
     "type": "git",
