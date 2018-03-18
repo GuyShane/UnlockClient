@@ -167,6 +167,9 @@
     };
 
     function verify(obj, schema){
+        if (typeof obj==='undefined'){
+            throw new Error('You need to supply an options object');
+        }
         var ret={};
         var key;
         for (key in obj){
