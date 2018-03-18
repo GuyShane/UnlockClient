@@ -19,6 +19,7 @@
             "error",
             "unix"
         ],
+        "no-useless-escape": "off",
         "quotes": [
             "error",
             "single"

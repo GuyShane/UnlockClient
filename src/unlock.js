@@ -40,7 +40,7 @@
         self.url=opts.url;
         self.email=opts.email;
         self.button=opts.button;
-        self.color=opts.color;
+        self.color=normalizeColor(opts.color);
 
         self.onMessage=opts.onMessage;
         self.onOpen=opts.onOpen;
@@ -195,6 +195,26 @@
             }
         }
         return ret;
+    }
+
+    function normalizeColor(c){
+        var match=c.match(/^#?([0-9a-f]{6})$/i);
+        if (match){
+            return '#'+match[1];
+        }
+        match=c.match(/^#?([1-9a-f])([1-9a-f])([1-9a-f])$/i);
+        if (match){
+            return '#'+match[1]+match[1]+match[2]+match[2]+match[3]+match[3];
+        }
+        var numMatch='[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]';
+        var rgbRegex=new RegExp('^rgb\\(('+numMatch+'), ?('+numMatch+'), ?('+numMatch+')\\)$', 'i');
+        match=c.match(rgbRegex);
+        if (match){
+            return '#'+parseInt(match[1]).toString(16)+
+                parseInt(match[2]).toString(16)+
+                parseInt(match[3]).toString(16);
+        }
+        throw new Error('Unrecognized color '+c);
     }
 
     function alter(c, up){
