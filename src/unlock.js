@@ -49,12 +49,12 @@
         self.socket=new WebSocket(self.url);
         self.isOpen=false;
         self.shouldSend=false;
-        self.setupSocket();
+        self._setupSocket();
 
         if (self.button){
             self.buttonId='unlock-button';
-            self.onclick=self.submit.bind(self);
-            self.buildButton();
+            self.onclick=self._submit.bind(self);
+            self._buildButton();
         }
     }
 
@@ -62,11 +62,38 @@
         var self=this;
         self.socket.send(JSON.stringify({
             type: 'unlock',
-            email: self.getEmail()
+            email: self._getEmail()
         }));
     };
 
-    Unlock.prototype.setupSocket=function(){
+    Unlock.prototype.isOpen=function(){
+        return this.isOpen;
+    };
+
+    Unlock.prototype.enableButton=function(){
+        var self=this;
+        if (!self.button){
+            return;
+        }
+        var b=document.getElementById(self.buttonId);
+        b.removeEventListener('click', self.onclick);
+        b.addEventListener('click', self.onclick);
+        b.classList.remove('unlock-disabled');
+        b.classList.add('unlock-enabled');
+    };
+
+    Unlock.prototype.disableButton=function(){
+        var self=this;
+        if (!self.button){
+            return;
+        }
+        var b=document.getElementById(self.buttonId);
+        b.removeEventListener('click', self.onclick);
+        b.classList.remove('unlock-enabled');
+        b.classList.add('unlock-disabled');
+    };
+
+    Unlock.prototype._setupSocket=function(){
         var self=this;
         self.socket.onopen=function(){
             self.onOpen();
@@ -98,11 +125,11 @@
         };
     };
 
-    Unlock.prototype.getEmail=function(){
+    Unlock.prototype._getEmail=function(){
         return document.getElementById(this.email).value;
     };
 
-    Unlock.prototype.submit=function(){
+    Unlock.prototype._submit=function(){
         var self=this;
         if (self.isOpen){
             self.disableButton();
@@ -113,30 +140,7 @@
         }
     };
 
-    Unlock.prototype.enableButton=function(){
-        var self=this;
-        if (!self.button){
-            return;
-        }
-        var b=document.getElementById(self.buttonId);
-        b.removeEventListener('click', self.onclick);
-        b.addEventListener('click', self.onclick);
-        b.classList.remove('unlock-disabled');
-        b.classList.add('unlock-enabled');
-    };
-
-    Unlock.prototype.disableButton=function(){
-        var self=this;
-        if (!self.button){
-            return;
-        }
-        var b=document.getElementById(self.buttonId);
-        b.removeEventListener('click', self.onclick);
-        b.classList.remove('unlock-enabled');
-        b.classList.add('unlock-disabled');
-    };
-
-    Unlock.prototype.buildButton=function(){
+    Unlock.prototype._buildButton=function(){
         var self=this;
         var b=document.getElementById(self.buttonId);
         b.classList.add('unlock-enabled');
@@ -144,11 +148,11 @@
             '<span id="unlock-cover"></span><div id="unlock-spinner"><div class="unlock-dot" id="unlock-dot-one">'+
             '</div><div class="unlock-dot" id="unlock-dot-two"></div><div class="unlock-dot" id="unlock-dot-three"></div></div>';
         b.innerHTML=html;
-        self.addColor();
+        self._addColor();
         self.enableButton();
     };
 
-    Unlock.prototype.addColor=function(){
+    Unlock.prototype._addColor=function(){
         var self=this;
         var bg=self.color;
         var light=alter(self.color, true);
