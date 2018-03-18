@@ -214,7 +214,7 @@
                 parseInt(match[2]).toString(16)+
                 parseInt(match[3]).toString(16);
         }
-        throw new Error('Unrecognized color '+c);
+        throw new Error('Unrecognized color '+c+'. Must be either hex or rgb format');
     }
 
     function alter(c, up){
