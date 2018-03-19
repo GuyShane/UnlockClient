@@ -21,14 +21,14 @@ describe('Unlock client tests', function(){
 
         it('should fail if no email field is given', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 onMessage: function(){}
             })).to.throw();
         });
 
         it('should fail if no onMessage function is given', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email'
             })).to.throw();
         });
@@ -43,7 +43,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if email is not a string', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: true,
                 onMessage: function(){}
             })).to.throw();
@@ -51,7 +51,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if onMessage is not a function', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: 'onMessage'
             })).to.throw();
@@ -59,7 +59,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if button is passed and is not a boolean', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
                 button: 'false'
@@ -68,7 +68,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if color is passed and is not a string', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
                 color: 0x2311f6
@@ -77,7 +77,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if onOpen is passed and is not a function', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
                 onOpen: 'open'
@@ -86,7 +86,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if onClose is passed and is not a function', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
                 onClose: false
@@ -95,7 +95,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if an unknown option is passed', function(){
             expect(Unlock.bind(undefined, {
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
                 badOption: true
@@ -105,7 +105,7 @@ describe('Unlock client tests', function(){
         describe('Color validation', function(){
             it ('should fail if color is not a valid hex number', function(){
                 expect(Unlock.bind(undefined, {
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#ff190g'
@@ -123,7 +123,7 @@ describe('Unlock client tests', function(){
                         color+=_.sample(chars);
                     }
                     expect(Unlock.bind(undefined, {
-                        url: 'ws://localhost',
+                        url: 'ws://localhost:3456',
                         email: 'email',
                         onMessage: function(){},
                         color: color
@@ -133,7 +133,7 @@ describe('Unlock client tests', function(){
 
             it('should fail if given an rgba color', function(){
                 expect(Unlock.bind(undefined, {
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgba(225, 86, 9, 0.5)'
@@ -142,13 +142,13 @@ describe('Unlock client tests', function(){
 
             it('should fail if given an rgb color with values out of range', function(){
                 expect(Unlock.bind(undefined, {
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(-4, 16, 55)'
                 })).to.throw();
                 expect(Unlock.bind(undefined, {
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(109, 76, 743)'
@@ -160,7 +160,7 @@ describe('Unlock client tests', function(){
     describe('Color normalization', function(){
         it ('should default to blue if no color is specified', function(){
             var u=new Unlock({
-                url: 'ws://localhost',
+                url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){}
             });
@@ -170,7 +170,7 @@ describe('Unlock client tests', function(){
         describe('Six character hex', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#6741f0'
@@ -180,7 +180,7 @@ describe('Unlock client tests', function(){
 
             it('should work without a leading hash', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '2258e3'
@@ -190,7 +190,7 @@ describe('Unlock client tests', function(){
 
             it('should convert hex digits to lowercase', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#ABCDEF'
@@ -202,7 +202,7 @@ describe('Unlock client tests', function(){
         describe('Three character hex', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#28c'
@@ -212,7 +212,7 @@ describe('Unlock client tests', function(){
 
             it('should expand the color to six characters and a hash', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#41b'
@@ -223,7 +223,7 @@ describe('Unlock client tests', function(){
 
             it('should work without a leading hash', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '513'
@@ -233,7 +233,7 @@ describe('Unlock client tests', function(){
 
             it('should convert hex digits to lowercase', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: '#ABC'
@@ -245,7 +245,7 @@ describe('Unlock client tests', function(){
         describe('rgb', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(12, 24, 36)'
@@ -255,7 +255,7 @@ describe('Unlock client tests', function(){
 
             it('should work without spaces', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(12,15,108)'
@@ -265,7 +265,7 @@ describe('Unlock client tests', function(){
 
             it('should work with spaces', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(72, 212, 89)'
@@ -275,7 +275,7 @@ describe('Unlock client tests', function(){
 
             it('should work with some spaces', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(123, 0,60)'
@@ -285,7 +285,7 @@ describe('Unlock client tests', function(){
 
             it('should return lowercase hex with six characters', function(){
                 var u=new Unlock({
-                    url: 'ws://localhost',
+                    url: 'ws://localhost:3456',
                     email: 'email',
                     onMessage: function(){},
                     color: 'rgb(96, 38, 59)'
