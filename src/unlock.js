@@ -47,7 +47,7 @@
         self.onClose=opts.onClose;
 
         self.socket=new WebSocket(self.url);
-        self.isOpen=false;
+        self.open=false;
         self.shouldSend=false;
         self._setupSocket();
 
@@ -67,7 +67,7 @@
     };
 
     Unlock.prototype.isOpen=function(){
-        return this.isOpen;
+        return this.open;
     };
 
     Unlock.prototype.enableButton=function(){
@@ -97,7 +97,7 @@
         var self=this;
         self.socket.onopen=function(){
             self.onOpen();
-            self.isOpen=true;
+            self.open=true;
             if (self.shouldSend){
                 self.unlock();
                 self.shouldSend=false;
@@ -107,7 +107,7 @@
         self.socket.onclose=function(){
             self.onClose();
             self.socket=undefined;
-            self.isOpen=false;
+            self.open=false;
         };
 
         self.socket.onmessage=function(event){
@@ -131,7 +131,7 @@
 
     Unlock.prototype._submit=function(){
         var self=this;
-        if (self.isOpen){
+        if (self.open){
             self.disableButton();
             self.unlock();
         }
@@ -143,6 +143,9 @@
     Unlock.prototype._buildButton=function(){
         var self=this;
         var b=document.getElementById(self.buttonId);
+        if (!b){
+            throw new Error('You need to place an element with the id "unlock-button" on your page');
+        }
         b.classList.add('unlock-enabled');
         var html='<img id="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
             '<span id="unlock-cover"></span><div id="unlock-spinner"><div class="unlock-dot" id="unlock-dot-one">'+
@@ -203,19 +206,19 @@
     function normalizeColor(c){
         var match=c.match(/^#?([0-9a-f]{6})$/i);
         if (match){
-            return '#'+match[1];
+            return ('#'+match[1]).toLowerCase();
         }
         match=c.match(/^#?([1-9a-f])([1-9a-f])([1-9a-f])$/i);
         if (match){
-            return '#'+match[1]+match[1]+match[2]+match[2]+match[3]+match[3];
+            return ('#'+match[1]+match[1]+match[2]+match[2]+match[3]+match[3]).toLowerCase();
         }
         var numMatch='[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]';
-        var rgbRegex=new RegExp('^rgb\\(('+numMatch+'), ?('+numMatch+'), ?('+numMatch+')\\)$', 'i');
+        var rgbRegex=new RegExp('^rgb\\(('+numMatch+'), ?('+numMatch+'), ?('+numMatch+')\\)$');
         match=c.match(rgbRegex);
         if (match){
-            return '#'+parseInt(match[1]).toString(16)+
-                parseInt(match[2]).toString(16)+
-                parseInt(match[3]).toString(16);
+            return ('#'+format(match[1])+
+                    format(match[2])+
+                    format(match[3])).toLowerCase();
         }
         throw new Error('Unrecognized color '+c+'. Must be either hex or rgb format');
     }
@@ -234,6 +237,7 @@
     }
 
     function format(num){
+        num=parseInt(num);
         if (num>255){num=255;}
         if (num<0){num=0;}
         var s=num.toString(16);

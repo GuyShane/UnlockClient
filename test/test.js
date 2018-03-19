@@ -156,4 +156,146 @@ describe('Unlock client tests', function(){
             });
         });
     });
+
+    describe('Color normalization', function(){
+        it ('should default to blue if no color is specified', function(){
+            var u=new Unlock({
+                url: 'ws://localhost',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect(u.color).to.equal('#2f81c6');
+        });
+
+        describe('Six character hex', function(){
+            it('should set a color if specified', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '#6741f0'
+                });
+                expect(u.color).to.be.a('string');
+            });
+
+            it('should work without a leading hash', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '2258e3'
+                });
+                expect(u.color).to.equal('#2258e3');
+            });
+
+            it('should convert hex digits to lowercase', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '#ABCDEF'
+                });
+                expect(u.color).to.equal('#abcdef');
+            });
+        });
+
+        describe('Three character hex', function(){
+            it('should set a color if specified', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '#28c'
+                });
+                expect(u.color).to.be.a('string');
+            });
+
+            it('should expand the color to six characters and a hash', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '#41b'
+                });
+                expect(u.color[0]).to.equal('#');
+                expect(u.color).to.have.lengthOf(7);
+            });
+
+            it('should work without a leading hash', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '513'
+                });
+                expect(u.color).to.equal('#551133');
+            });
+
+            it('should convert hex digits to lowercase', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: '#ABC'
+                });
+                expect(u.color).to.equal(u.color.toLowerCase());
+            });
+        });
+
+        describe('rgb', function(){
+            it('should set a color if specified', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: 'rgb(12, 24, 36)'
+                });
+                expect(u.color).to.be.a('string');
+            });
+
+            it('should work without spaces', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: 'rgb(12,15,108)'
+                });
+                expect(u.color).to.equal('#0c0f6c');
+            });
+
+            it('should work with spaces', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: 'rgb(72, 212, 89)'
+                });
+                expect(u.color).to.equal('#48d459');
+            });
+
+            it('should work with some spaces', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: 'rgb(123, 0,60)'
+                });
+                expect(u.color).to.equal('#7b003c');
+            });
+
+            it('should return lowercase hex with six characters', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost',
+                    email: 'email',
+                    onMessage: function(){},
+                    color: 'rgb(96, 38, 59)'
+                });
+                expect(u.color[0]).to.equal('#');
+                expect(u.color).to.equal(u.color.toLowerCase());
+                expect(u.color).to.have.lengthOf(7);
+            });
+        });
+    });
+
+    describe();
 });
