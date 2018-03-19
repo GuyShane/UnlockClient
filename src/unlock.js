@@ -38,7 +38,7 @@
         });
 
         self.url=opts.url;
-        self.email=opts.email;
+        self.email=verifyElem(opts.email);
         self.button=opts.button;
         self.color=normalizeColor(opts.color);
 
@@ -123,6 +123,10 @@
             }
             self.onMessage(data);
         };
+
+        self.socket.onerror=function(err){
+            throw err;
+        };
     };
 
     Unlock.prototype._getEmail=function(){
@@ -201,6 +205,13 @@
             }
         }
         return ret;
+    }
+
+    function verifyElem(id){
+        if (!document.getElementById(id)){
+            throw new Error('No element found with id '+id);
+        }
+        return id;
     }
 
     function normalizeColor(c){
