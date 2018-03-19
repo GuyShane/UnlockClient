@@ -102,6 +102,14 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
+        it('should fail if there is no element with the given id for email', function(){
+            expect(Unlock.bind(undefined, {
+                url: 'ws://localhost:3456',
+                email: 'noemail',
+                onMessage: function(){}
+            })).to.throw();
+        });
+
         describe('Color validation', function(){
             it ('should fail if color is not a valid hex number', function(){
                 expect(Unlock.bind(undefined, {
@@ -293,6 +301,60 @@ describe('Unlock client tests', function(){
                 expect(u.color[0]).to.equal('#');
                 expect(u.color).to.equal(u.color.toLowerCase());
                 expect(u.color).to.have.lengthOf(7);
+            });
+        });
+    });
+
+    describe('Socket', function(){
+        it('should connect', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    done();
+                }
+            });
+        });
+
+        it('should call send a request if shouldSend is true when the socket connects', function(done){
+            var unlockStub=sinon.stub(Unlock.prototype, 'unlock').returns();
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    expect(unlockStub.called).to.equal(true);
+                    Unlock.prototype.unlock.restore();
+                    done();
+                }
+            });
+            u.shouldSend=true;
+        });
+
+        it('should be marked as open', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    expect(u.isOpen()).to.equal(true);
+                    done();
+                }
+            });
+        });
+
+        it('should call onClose when the socket closes', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    u.socket.send('close');
+                },
+                onClose: function(){
+                    done();
+                }
             });
         });
     });

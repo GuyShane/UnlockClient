@@ -96,12 +96,12 @@
     Unlock.prototype._setupSocket=function(){
         var self=this;
         self.socket.onopen=function(){
-            self.onOpen();
             self.open=true;
             if (self.shouldSend){
                 self.unlock();
                 self.shouldSend=false;
             }
+            self.onOpen();
         };
 
         self.socket.onclose=function(){
