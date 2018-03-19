@@ -5,4 +5,4 @@ node_js:
 install:
  - npm install
 before_script:
- - node test/echo.js
+ - node test/echo.js &
