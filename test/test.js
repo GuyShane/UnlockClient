@@ -296,6 +296,4 @@ describe('Unlock client tests', function(){
             });
         });
     });
-
-    describe();
 });
