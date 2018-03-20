@@ -357,5 +357,99 @@ describe('Unlock client tests', function(){
                 }
             });
         });
+
+        it('should call onMessage when the socket receives data', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send('data');
+                }
+            });
+        });
+
+        it('should call onMessage with an object if the response is JSON', function(done){
+            var toSend={
+                a: 1,
+                b: 'b',
+                c: {
+                    d: true
+                }
+            };
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data).to.be.an('object');
+                    expect(data).to.deep.equal(toSend);
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send(JSON.stringify(toSend));
+                }
+            });
+        });
+
+        it('should call onMessage with a number', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data).to.be.a('number');
+                    expect(data).to.equal(10);
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send(10);
+                }
+            });
+        });
+
+        it('should call onMessage with a string', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data).to.be.a('string');
+                    expect(data).to.equal('hello');
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send('hello');
+                }
+            });
+        });
+
+        it('should call onMessage with a boolean', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data).to.be.a('boolean');
+                    expect(data).to.equal(false);
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send(false);
+                }
+            });
+        });
+
+        it('should call onMessage with null', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data).to.be.null;
+                    done();
+                },
+                onOpen: function(){
+                    u.socket.send(null);
+                }
+            });
+        });
     });
 });

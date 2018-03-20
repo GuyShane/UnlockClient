@@ -116,7 +116,7 @@
                 data=JSON.parse(event.data);
             }
             catch (err) {
-                data=event;
+                data=event.data;
             }
             if(self.button){
                 self.enableButton();
