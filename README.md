@@ -8,7 +8,7 @@ If you haven't set up your server for Unlock yet, check out [the website](https:
 [![Build Status](https://travis-ci.org/GuyShane/UnlockClient.svg?branch=master)](https://travis-ci.org/GuyShane/UnlockClient)
 
 ### Installing
-Download [unlock.min.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.css) and [unlock.min.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.js) (or [unlock.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.css) and [unlock.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.js)) and include them in your webpage, then include them in the relevant places
+Download [unlock.min.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.css) and [unlock.min.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.js) (or [unlock.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.css) and [unlock.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.js)), then include them in the relevant places
 ```html
 ...
 <link rel="stylesheet" href="unlock.min.css" />
@@ -18,8 +18,15 @@ Download [unlock.min.css](https://raw.githubusercontent.com/GuyShane/UnlockClien
 ```
 
 ### Usage
-This library exports a class, Unlock, which you interact with to create connections. The class is initialized with an options object to specify its behaviour.
-```js
+This library exports a class, Unlock, to the global space which you interact with to create connections. The class is initialized with an options object to specify its behaviour.
+```html
+...
+<div>
+    <input type="email" id="email" />
+    <div id="unlock-button"></div>
+</div>
+...
+<script>
 var unlocker=new Unlock({
     url: 'ws://localhost',
     email: 'email',
@@ -27,13 +34,34 @@ var unlocker=new Unlock({
         console.log(data);
     }
 });
+</script>
+...
 ```
-| Name | Type | Attributes | Description |
-| ---- | ---- | ---------- | ----------- |
-| url | string | required | The url for the socket to connect to. |
-| email | string | required | The id of the input element where the user enters their email address. |
-| onMessage | function | required | A function to be called when the socket receices data. |
-| button | boolean | optional | Whether or not to use the built in button. |
-| color | string | optional | The background color of the button. |
-| onOpen | function | optional | A function called when the socket connection is open. |
-| onClose | function | optional | A function called if/when the socket connection closes. |
+
+### API
+
+#### var unlocker=new Unlock(options)
+| Name | Type | Attributes | Default | Description |
+| ---- | ---- | ---------- | ------- | ----------- |
+| url | string | required | - | The url for the socket to connect to. |
+| email | string | required | - | The id of the input element where the user enters their email address. |
+| onMessage | function | required | - | A function to be called when the socket receices data. |
+| button | boolean | optional | true | Whether or not to use the built in button. |
+| buttonId | string | optional | 'unlock-button' | The id of the button used to submit requests. |
+| color | string | optional | '#2f81c6' | The background color of the button. |
+| onOpen | function | optional | - | A function called when the socket connection is open. |
+| onClose | function | optional | - | A function called if/when the socket connection closes. |
+
+If `button` is set to `true` (the default), Unlock will handle calling unlock(), adding and removing click listeners, and general state management. You won't need to worry about calling the methods yourself unless you pass `button: false` or if you have some custom state management.
+
+#### unlocker.unlock()
+Sends an unlock request using the options information given to the constructor. It will grab whatever is in the email field at the time it is called and passes it along to the server to be processed further.
+
+#### unlocker.isOpen() -> *boolean*
+Returns true if the socket connection is open, otherwise returns false.
+
+#### unlocker.enableButton()
+If the object was initialized with `button: true`, this will add a listener to submit an Unlock request when the button is clicked, as well as style the button accordingly. If `button: false` was passed, this method won't do anything.
+
+#### unlocker.disableButton()
+If the object was initialized with `button: true`, this will remove the click listener to submit requests, and it will style the button with a waiting animation. If `button: false` was passed, this method won't do anything.
