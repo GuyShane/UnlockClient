@@ -1,0 +1,23 @@
+{
+  "name": "unlock-client",
+  "description": "A frontend javascript library for authenticating with Unlock",
+  "main": "src/unlock.js",
+  "authors": [
+    "Shane Brass"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "authentication",
+    "frontend",
+    "unlock",
+    "websocket"
+  ],
+  "homepage": "https://github.com/GuyShane/UnlockClient",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
