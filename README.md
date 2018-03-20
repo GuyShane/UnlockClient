@@ -17,6 +17,14 @@ Download [unlock.min.css](https://raw.githubusercontent.com/GuyShane/UnlockClien
 ...
 ```
 
+Unlock is also available via npm:
+
+`npm install unlock-client`
+
+and bower:
+
+`bower install unlock-client`
+
 ### Usage
 This library exports a class, Unlock, to the global space which you interact with to create connections. The class is initialized with an options object to specify its behaviour.
 ```html
@@ -67,3 +75,17 @@ If the object was initialized with `button: true`, this will add a listener to s
 
 #### unlocker.disableButton()
 If the object was initialized with `button: true`, this will remove the click listener to submit requests, and it will style the button with a waiting animation. If `button: false` was passed, this method won't do anything.
+
+### Running tests
+Clone the repo and run
+```
+npm install
+npm run echo:start
+npm test
+```
+eco:start starts a simple node WebSocket server on localhost:3456 for use with the tests
+
+### License
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2018 Shane Brass
