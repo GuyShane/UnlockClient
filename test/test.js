@@ -512,9 +512,36 @@ describe('Unlock client tests', function(){
                 email: 'email',
                 onMessage: function(){}
             });
-            expect($('#unlock-logo').length).to.equal(1);
-            expect($('#unlock-cover').length).to.equal(1);
-            expect($('#unlock-spinner').length).to.equal(1);
+            expect($('#unlock-button #unlock-logo').length).to.equal(1);
+            expect($('#unlock-button #unlock-cover').length).to.equal(1);
+            expect($('#unlock-button #unlock-spinner').length).to.equal(1);
+        });
+
+        it('should be able to insert html into a different button', function(){
+            new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                buttonId: 'unlock-button-2'
+            });
+            expect($('#unlock-button-2 #unlock-logo').length).to.equal(1);
+            expect($('#unlock-button-2 #unlock-cover').length).to.equal(1);
+            expect($('#unlock-button-2 #unlock-spinner').length).to.equal(1);
+        });
+
+        it('shouldn\'t insert any html if button is false', function(){
+            $('#unlock-button').html('')
+                .removeClass('unlock-enabled')
+                .removeClass('unlock-disabled');
+            new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                button: false
+            });
+            expect($('#unlock-button #unlock-logo').length).to.equal(0);
+            expect($('#unlock-button #unlock-cover').length).to.equal(0);
+            expect($('#unlock-button #unlock-spinner').length).to.equal(0);
         });
 
         it('should set the color of the button to blue by default', function(){

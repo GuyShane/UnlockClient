@@ -8,6 +8,7 @@
     },
     "globals": {
         "describe": false,
+        "beforeEach": false,
         "it": false,
         "sinon": false,
         "expect": false,

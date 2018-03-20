@@ -23,7 +23,7 @@ $delay-three: $duration*0.66666;
     }
 }
 
-#unlock-button {
+[id^="unlock-button"] {
     display: inline-block;
     position: relative;
     background-color: transparent;

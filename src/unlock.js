@@ -20,6 +20,11 @@
                 type: 'boolean',
                 default: true
             },
+            buttonId: {
+                required: false,
+                type: 'string',
+                default: 'unlock-button'
+            },
             color: {
                 required: false,
                 type: 'string',
@@ -40,6 +45,7 @@
         self.url=opts.url;
         self.email=verifyElem(opts.email);
         self.button=opts.button;
+        self.buttonId=verifyElem(opts.buttonId);
         self.color=normalizeColor(opts.color);
 
         self.onMessage=opts.onMessage;
@@ -52,7 +58,6 @@
         self._setupSocket();
 
         if (self.button){
-            self.buttonId='unlock-button';
             self.onclick=self._submit.bind(self);
             self._buildButton();
         }
@@ -147,10 +152,7 @@
     Unlock.prototype._buildButton=function(){
         var self=this;
         var b=document.getElementById(self.buttonId);
-        if (!b){
-            throw new Error('You need to place an element with the id "unlock-button" on your page');
-        }
-        if (document.getElementById('unlock-logo')){
+        if (b.querySelector('#unlock-logo')){
             var clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
         }
@@ -174,9 +176,9 @@
         style.appendChild(document.createTextNode(''));
         document.head.appendChild(style);
         var sheet=style.sheet;
-        sheet.insertRule('#unlock-button {background-color: '+bg+'}', sheet.cssRules.length);
-        sheet.insertRule('#unlock-button.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
-        sheet.insertRule('#unlock-button.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
+        sheet.insertRule('#'+self.buttonId+' {background-color: '+bg+'}', sheet.cssRules.length);
+        sheet.insertRule('#'+self.buttonId+'.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
+        sheet.insertRule('#'+self.buttonId+'.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
     };
 
     function verify(obj, schema){

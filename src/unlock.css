@@ -34,16 +34,16 @@
     transform: scale(0);
     left: 20px; } }
 
-#unlock-button {
+[id^="unlock-button"] {
   display: inline-block;
   position: relative;
   background-color: transparent;
   padding: 7px 17px;
   border-radius: 8px; }
-  #unlock-button #unlock-logo {
+  [id^="unlock-button"] #unlock-logo {
     width: 77px;
     height: 18px; }
-  #unlock-button #unlock-cover {
+  [id^="unlock-button"] #unlock-cover {
     position: absolute;
     left: 0;
     top: 0;
@@ -52,7 +52,7 @@
     background-color: rgba(76, 76, 76, 0.6);
     border-radius: 8px;
     transition: opacity 0.2s; }
-  #unlock-button #unlock-spinner {
+  [id^="unlock-button"] #unlock-spinner {
     width: 12px;
     height: 12px;
     position: absolute;
@@ -61,31 +61,31 @@
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     transition: opacity 0.2s; }
-    #unlock-button #unlock-spinner .unlock-dot {
+    [id^="unlock-button"] #unlock-spinner .unlock-dot {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       background-color: #fff;
       position: absolute;
       left: 0px; }
-    #unlock-button #unlock-spinner #unlock-dot-one {
+    [id^="unlock-button"] #unlock-spinner #unlock-dot-one {
       -webkit-animation: move 1.2s ease-in-out 0s infinite normal;
       animation: move 1.2s ease-in-out 0s infinite normal; }
-    #unlock-button #unlock-spinner #unlock-dot-two {
+    [id^="unlock-button"] #unlock-spinner #unlock-dot-two {
       -webkit-animation: move 1.2s ease-in-out 0.4s infinite normal;
       animation: move 1.2s ease-in-out 0.4s infinite normal;
       -webkit-animation-fill-mode: backwards;
       animation-fill-mode: backwards; }
-    #unlock-button #unlock-spinner #unlock-dot-three {
+    [id^="unlock-button"] #unlock-spinner #unlock-dot-three {
       -webkit-animation: move 1.2s ease-in-out 0.79999s infinite normal;
       animation: move 1.2s ease-in-out 0.79999s infinite normal;
       -webkit-animation-fill-mode: backwards;
       animation-fill-mode: backwards; }
-  #unlock-button.unlock-enabled #unlock-cover {
+  [id^="unlock-button"].unlock-enabled #unlock-cover {
     opacity: 0; }
-  #unlock-button.unlock-enabled #unlock-spinner {
+  [id^="unlock-button"].unlock-enabled #unlock-spinner {
     opacity: 0; }
-  #unlock-button.unlock-disabled #unlock-cover {
+  [id^="unlock-button"].unlock-disabled #unlock-cover {
     opacity: 1; }
-  #unlock-button.unlock-disabled #unlock-spinner {
+  [id^="unlock-button"].unlock-disabled #unlock-spinner {
     opacity: 1; }
