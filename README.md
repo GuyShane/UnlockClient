@@ -29,7 +29,7 @@ This library exports a class, Unlock, to the global space which you interact wit
 <script>
 var unlocker=new Unlock({
     url: 'ws://localhost',
-    email: 'email',
+    email: '#email',
     onMessage: function(data){
         console.log(data);
     }
@@ -41,16 +41,18 @@ var unlocker=new Unlock({
 ### API
 
 #### var unlocker=new Unlock(options)
+Constructs a new Unlock object with the specified options. The behaviour can be set as follows:
+
 | Name | Type | Attributes | Default | Description |
 | ---- | ---- | ---------- | ------- | ----------- |
-| url | string | required | - | The url for the socket to connect to. |
-| email | string | required | - | The id of the input element where the user enters their email address. |
-| onMessage | function | required | - | A function to be called when the socket receices data. |
+| url | string | required | - | The url for the socket to connect to. This is the url of your WebSocket server which communicates with Unlock. |
+| email | string | required | - | The id of the input element where the user enters their email address. Should contain a leading hash. For example: '#email' |
+| onMessage | function | required | - | A function to be called when the socket receices data. The function is passed one argument; the data that was sent through the socket. If the data was JSON, Unlock will parse it first and onMessage will be called with the object, otherwise onMessage will be called with whatever was sent. Typical actions would be storing an authentication cookie and refreshing/redirecting, or handling any errors that occured. |
 | button | boolean | optional | true | Whether or not to use the built in button. |
-| buttonId | string | optional | 'unlock-button' | The id of the button used to submit requests. |
-| color | string | optional | '#2f81c6' | The background color of the button. |
-| onOpen | function | optional | - | A function called when the socket connection is open. |
-| onClose | function | optional | - | A function called if/when the socket connection closes. |
+| buttonId | string | optional | '#unlock-button' | The id of the button used to submit requests. If a custom button id is specified, it must start with 'unlock-button' to receive styling. For example: '#unlock-button-2'. |
+| color | string | optional | '#2f81c6' | The background color of the button. Unlock will also automatically set the :hover and :active states to be lighter and darker than the specified color, respectively. Accepted inputs are hex (3 or 6 characters), and rgb() |
+| onOpen | function | optional | - | A function called when the socket connection is open. unlocker.isOpen() will return true at this point. |
+| onClose | function | optional | - | A function called if/when the socket connection closes. unlocker.isOpen() will return false at this point. As well, the internal socket object will be removed. If another connection is required, you can construct a new Unlock object. |
 
 If `button` is set to `true` (the default), Unlock will handle calling unlock(), adding and removing click listeners, and general state management. You won't need to worry about calling the methods yourself unless you pass `button: false` or if you have some custom state management.
 
