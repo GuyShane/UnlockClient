@@ -317,7 +317,7 @@ describe('Unlock client tests', function(){
             });
         });
 
-        it('should call send a request if shouldSend is true when the socket connects', function(done){
+        it('should send a request if shouldSend is true when the socket connects', function(done){
             var unlockStub=sinon.stub(Unlock.prototype, 'unlock').returns();
             var u=new Unlock({
                 url: 'ws://localhost:3456',
@@ -536,6 +536,17 @@ describe('Unlock client tests', function(){
             expect($('#unlock-button').css('background-color')).to.equal('rgb(128, 30, 29)');
         });
 
+
+        it('should set shouldSend to true if the socket isn\'t open yet', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            $('#unlock-button').click();
+            expect(u.shouldSend).to.equal(true);
+        });
+
         describe('enableButton()', function(){
             it('should do nothing if button is false', function(){
                 var u=new Unlock({
@@ -559,11 +570,11 @@ describe('Unlock client tests', function(){
                 u.enableButton();
                 var button=$('#unlock-button');
                 expect(button.hasClass('unlock-enabled')).to.equal(true);
-                expect(button.hasClass('unlock-diabled')).to.equal(false);
+                expect(button.hasClass('unlock-disabled')).to.equal(false);
             });
 
             it('should add a click listener to call _submit', function(done){
-                var submitStub=sinon.stub(Unlock.prototype, '_submit');
+                var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
                     email: 'email',
@@ -578,9 +589,109 @@ describe('Unlock client tests', function(){
                 u.enableButton();
             });
 
-            it('should only add one click listener if called multiple times', function(){});
+            it('should only add one click listener if called multiple times', function(done){
+                var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){},
+                    onOpen: function(){
+                        $('#unlock-button').click();
+                        expect(submitStub.callCount).to.equal(1);
+                        Unlock.prototype._submit.restore();
+                        done();
+                    }
+                });
+                u.enableButton();
+                u.enableButton();
+                u.enableButton();
+            });
+        });
 
-            it('should set shouldSend to true if the socket isn\'t open yet', function(){});
+        describe('disableButton()', function(){
+            it('should do nothing if button is false', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){},
+                    button: false
+                });
+                var docSpy=sinon.spy(document, 'getElementById');
+                u.disableButton();
+                expect(docSpy.called).to.equal(false);
+                document.getElementById.restore();
+            });
+
+            it('should give the button the class "unlock-disabled" and remove class "unlock-enabled"', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){}
+                });
+                u.disableButton();
+                var button=$('#unlock-button');
+                expect(button.hasClass('unlock-disabled')).to.equal(true);
+                expect(button.hasClass('unlock-enabled')).to.equal(false);
+            });
+
+            it('should remove click listener from button', function(done){
+                var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){},
+                    onOpen: function(){
+                        u.disableButton();
+                        $('#unlock-button').click();
+                        expect(submitStub.called).to.equal(false);
+                        Unlock.prototype._submit.restore();
+                        done();
+                    }
+                });
+            });
+        });
+    });
+
+    describe('unlock()', function(){
+        it('should send data with type "unlock"', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data.type).to.equal('unlock');
+                    done();
+                },
+                onOpen: function(){
+                    u.unlock();
+                }
+            });
+        });
+
+        it('should send data with whatever is typed in the email field', function(done){
+            $('#email').val('test@email.com');
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(data){
+                    expect(data.email).to.equal('test@email.com');
+                    done();
+                },
+                onOpen: function(){
+                    u.unlock();
+                }
+            });
+        });
+    });
+
+    describe('_getEmail()', function(){
+        it('should return whatever is in the email field', function(){
+            $('#email').val('user@gmail.com');
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect(u._getEmail()).to.equal('user@gmail.com');
         });
     });
 });
