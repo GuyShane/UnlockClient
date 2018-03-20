@@ -307,7 +307,7 @@ describe('Unlock client tests', function(){
 
     describe('Socket', function(){
         it('should connect', function(done){
-            var u=new Unlock({
+            new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},
@@ -342,7 +342,7 @@ describe('Unlock client tests', function(){
                     done();
                 }
             });
-            expect(u.isOpen()).to.equal(false);;
+            expect(u.isOpen()).to.equal(false);
         });
 
         it('should call onClose when the socket closes', function(done){
@@ -394,7 +394,7 @@ describe('Unlock client tests', function(){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
-                onMessage: function(data){
+                onMessage: function(){
                     done();
                 },
                 onOpen: function(){
@@ -497,7 +497,7 @@ describe('Unlock client tests', function(){
 
         it('should call _buildbutton', function(){
             var buttonSpy=sinon.spy(Unlock.prototype, '_buildButton');
-            var u=new Unlock({
+            new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){}
@@ -507,7 +507,7 @@ describe('Unlock client tests', function(){
         });
 
         it('should insert button html into page', function(){
-            var u=new Unlock({
+            new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){}
@@ -518,7 +518,7 @@ describe('Unlock client tests', function(){
         });
 
         it('should set the color of the button to blue by default', function(){
-            var u=new Unlock({
+            new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){}
@@ -527,7 +527,7 @@ describe('Unlock client tests', function(){
         });
 
         it('should be able to specify a color for the button', function(){
-            var u=new Unlock({
+            new Unlock({
                 url: 'ws://localhost:3456',
                 email: 'email',
                 onMessage: function(){},

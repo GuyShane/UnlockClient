@@ -6,13 +6,23 @@ const prefix=require('gulp-autoprefixer');
 const rename=require('gulp-rename');
 const pump=require('pump');
 
-gulp.task('lint', (cb)=>{
+gulp.task('lint-tests', (cb)=>{
+    pump([
+        gulp.src('./test/test.js'),
+        lint('.eslint-tests.json'),
+        lint.format()
+    ], cb);
+});
+
+gulp.task('lint-lib', (cb)=>{
     pump([
         gulp.src('./src/unlock.js'),
         lint('.eslint.json'),
         lint.format()
     ], cb);
 });
+
+gulp.task('lint', ['lint-tests', 'lint-lib']);
 
 gulp.task('uglify', (cb)=>{
     pump([
@@ -61,7 +71,7 @@ const jsTasks=['uglify', 'lint'];
 const cssTasks=['scss', 'min-scss', 'prefix'];
 
 gulp.task('watch-js', ()=>{
-    return gulp.watch('./src/unlock.js', jsTasks);
+    return gulp.watch(['./src/unlock.js', './test/test.js'], jsTasks);
 });
 
 gulp.task('watch-css', ()=>{
