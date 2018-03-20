@@ -105,9 +105,9 @@
         };
 
         self.socket.onclose=function(){
-            self.onClose();
             self.socket=undefined;
             self.open=false;
+            self.onClose();
         };
 
         self.socket.onmessage=function(event){
@@ -150,11 +150,17 @@
         if (!b){
             throw new Error('You need to place an element with the id "unlock-button" on your page');
         }
-        b.classList.add('unlock-enabled');
-        var html='<img id="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
-            '<span id="unlock-cover"></span><div id="unlock-spinner"><div class="unlock-dot" id="unlock-dot-one">'+
-            '</div><div class="unlock-dot" id="unlock-dot-two"></div><div class="unlock-dot" id="unlock-dot-three"></div></div>';
-        b.innerHTML=html;
+        if (document.getElementById('unlock-logo')){
+            var clone=b.cloneNode(true);
+            b.parentNode.replaceChild(clone, b);
+        }
+        else {
+            b.classList.add('unlock-enabled');
+            var html='<img id="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
+                '<span id="unlock-cover"></span><div id="unlock-spinner"><div class="unlock-dot" id="unlock-dot-one">'+
+                '</div><div class="unlock-dot" id="unlock-dot-two"></div><div class="unlock-dot" id="unlock-dot-three"></div></div>';
+            b.innerHTML=html;
+        }
         self._addColor();
         self.enableButton();
     };

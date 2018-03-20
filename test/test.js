@@ -342,6 +342,7 @@ describe('Unlock client tests', function(){
                     done();
                 }
             });
+            expect(u.isOpen()).to.equal(false);;
         });
 
         it('should call onClose when the socket closes', function(done){
@@ -353,6 +354,37 @@ describe('Unlock client tests', function(){
                     u.socket.send('close');
                 },
                 onClose: function(){
+                    done();
+                }
+            });
+        });
+
+        it('should be marked as closed after the socket closes', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    expect(u.isOpen()).to.equal(true);
+                    u.socket.send('close');
+                },
+                onClose: function(){
+                    expect(u.isOpen()).to.equal(false);
+                    done();
+                }
+            });
+        });
+
+        it('should delete the socket instance after it closes', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                onOpen: function(){
+                    u.socket.send('close');
+                },
+                onClose: function(){
+                    expect(u.socket).to.be.undefined;
                     done();
                 }
             });
@@ -450,6 +482,105 @@ describe('Unlock client tests', function(){
                     u.socket.send(null);
                 }
             });
+        });
+    });
+
+    describe('Unlock button', function(){
+        it('should set the button id', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect(u.buttonId).to.equal('unlock-button');
+        });
+
+        it('should call _buildbutton', function(){
+            var buttonSpy=sinon.spy(Unlock.prototype, '_buildButton');
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect(buttonSpy.called).to.equal(true);
+            Unlock.prototype._buildButton.restore();
+        });
+
+        it('should insert button html into page', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect($('#unlock-logo').length).to.equal(1);
+            expect($('#unlock-cover').length).to.equal(1);
+            expect($('#unlock-spinner').length).to.equal(1);
+        });
+
+        it('should set the color of the button to blue by default', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){}
+            });
+            expect($('#unlock-button').css('background-color')).to.equal('rgb(47, 129, 198)');
+        });
+
+        it('should be able to specify a color for the button', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: 'email',
+                onMessage: function(){},
+                color: 'rgb(128, 30, 29)'
+            });
+            expect($('#unlock-button').css('background-color')).to.equal('rgb(128, 30, 29)');
+        });
+
+        describe('enableButton()', function(){
+            it('should do nothing if button is false', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){},
+                    button: false
+                });
+                var docSpy=sinon.spy(document, 'getElementById');
+                u.enableButton();
+                expect(docSpy.called).to.equal(false);
+                document.getElementById.restore();
+            });
+
+            it('should give the button the class "unlock-enabled" and remove class "unlock-disabled"', function(){
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){}
+                });
+                u.enableButton();
+                var button=$('#unlock-button');
+                expect(button.hasClass('unlock-enabled')).to.equal(true);
+                expect(button.hasClass('unlock-diabled')).to.equal(false);
+            });
+
+            it('should add a click listener to call _submit', function(done){
+                var submitStub=sinon.stub(Unlock.prototype, '_submit');
+                var u=new Unlock({
+                    url: 'ws://localhost:3456',
+                    email: 'email',
+                    onMessage: function(){},
+                    onOpen: function(){
+                        $('#unlock-button').click();
+                        expect(submitStub.called).to.equal(true);
+                        Unlock.prototype._submit.restore();
+                        done();
+                    }
+                });
+                u.enableButton();
+            });
+
+            it('should only add one click listener if called multiple times', function(){});
+
+            it('should set shouldSend to true if the socket isn\'t open yet', function(){});
         });
     });
 });
