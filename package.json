@@ -4,7 +4,9 @@
     "description": "A frontend javascript library for authenticating with Unlock",
     "main": "unlock.js",
     "scripts": {
-        "test": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
+        "test": "npm run test:lib; npm run test:min",
+        "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
+        "test:min": "./node_modules/mocha-headless-chrome/bin/start -f ./test/min.html",
         "echo": "npm run echo:stop; npm run echo:start",
         "echo:start": "node test/echo.js &",
         "echo:stop": "pkill -f 'node test/echo'"
