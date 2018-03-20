@@ -2,7 +2,9 @@
     "name": "unlock-client",
     "version": "1.0.0",
     "description": "A frontend javascript library for authenticating with Unlock",
-    "main": "unlock.js",
+    "keywords": ["authentication", "frontend", "unlock", "websocket"],
+    "files": ["src"],
+    "main": "src/unlock.js",
     "scripts": {
         "test": "npm run test:lib; npm run test:min",
         "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
