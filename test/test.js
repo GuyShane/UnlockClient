@@ -14,7 +14,7 @@ describe('Unlock client tests', function(){
 
         it('should fail if no url is given', function(){
             expect(Unlock.bind(undefined, {
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             })).to.throw();
         });
@@ -29,14 +29,14 @@ describe('Unlock client tests', function(){
         it('should fail if no onMessage function is given', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email'
+                email: '#email'
             })).to.throw();
         });
 
         it('should fail if url is not a string', function(){
             expect(Unlock.bind(undefined, {
                 url: 8,
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             })).to.throw();
         });
@@ -52,7 +52,7 @@ describe('Unlock client tests', function(){
         it('should fail if onMessage is not a function', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: 'onMessage'
             })).to.throw();
         });
@@ -60,7 +60,7 @@ describe('Unlock client tests', function(){
         it('should fail if button is passed and is not a boolean', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 button: 'false'
             })).to.throw();
@@ -69,7 +69,7 @@ describe('Unlock client tests', function(){
         it('should fail if color is passed and is not a string', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 color: 0x2311f6
             })).to.throw();
@@ -78,7 +78,7 @@ describe('Unlock client tests', function(){
         it('should fail if onOpen is passed and is not a function', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: 'open'
             })).to.throw();
@@ -87,7 +87,7 @@ describe('Unlock client tests', function(){
         it('should fail if onClose is passed and is not a function', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onClose: false
             })).to.throw();
@@ -96,7 +96,7 @@ describe('Unlock client tests', function(){
         it('should fail if an unknown option is passed', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 badOption: true
             })).to.throw();
@@ -114,7 +114,7 @@ describe('Unlock client tests', function(){
             it ('should fail if color is not a valid hex number', function(){
                 expect(Unlock.bind(undefined, {
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#ff190g'
                 })).to.throw();
@@ -132,7 +132,7 @@ describe('Unlock client tests', function(){
                     }
                     expect(Unlock.bind(undefined, {
                         url: 'ws://localhost:3456',
-                        email: 'email',
+                        email: '#email',
                         onMessage: function(){},
                         color: color
                     })).to.throw();
@@ -142,7 +142,7 @@ describe('Unlock client tests', function(){
             it('should fail if given an rgba color', function(){
                 expect(Unlock.bind(undefined, {
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgba(225, 86, 9, 0.5)'
                 })).to.throw();
@@ -151,13 +151,13 @@ describe('Unlock client tests', function(){
             it('should fail if given an rgb color with values out of range', function(){
                 expect(Unlock.bind(undefined, {
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(-4, 16, 55)'
                 })).to.throw();
                 expect(Unlock.bind(undefined, {
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(109, 76, 743)'
                 })).to.throw();
@@ -169,7 +169,7 @@ describe('Unlock client tests', function(){
         it ('should default to blue if no color is specified', function(){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             expect(u.color).to.equal('#2f81c6');
@@ -179,7 +179,7 @@ describe('Unlock client tests', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#6741f0'
                 });
@@ -189,7 +189,7 @@ describe('Unlock client tests', function(){
             it('should work without a leading hash', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '2258e3'
                 });
@@ -199,7 +199,7 @@ describe('Unlock client tests', function(){
             it('should convert hex digits to lowercase', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#ABCDEF'
                 });
@@ -211,7 +211,7 @@ describe('Unlock client tests', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#28c'
                 });
@@ -221,7 +221,7 @@ describe('Unlock client tests', function(){
             it('should expand the color to six characters and a hash', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#41b'
                 });
@@ -232,7 +232,7 @@ describe('Unlock client tests', function(){
             it('should work without a leading hash', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '513'
                 });
@@ -242,7 +242,7 @@ describe('Unlock client tests', function(){
             it('should convert hex digits to lowercase', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: '#ABC'
                 });
@@ -254,7 +254,7 @@ describe('Unlock client tests', function(){
             it('should set a color if specified', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(12, 24, 36)'
                 });
@@ -264,7 +264,7 @@ describe('Unlock client tests', function(){
             it('should work without spaces', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(12,15,108)'
                 });
@@ -274,7 +274,7 @@ describe('Unlock client tests', function(){
             it('should work with spaces', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(72, 212, 89)'
                 });
@@ -284,7 +284,7 @@ describe('Unlock client tests', function(){
             it('should work with some spaces', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(123, 0,60)'
                 });
@@ -294,7 +294,7 @@ describe('Unlock client tests', function(){
             it('should return lowercase hex with six characters', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     color: 'rgb(96, 38, 59)'
                 });
@@ -309,7 +309,7 @@ describe('Unlock client tests', function(){
         it('should connect', function(done){
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     done();
@@ -321,7 +321,7 @@ describe('Unlock client tests', function(){
             var unlockStub=sinon.stub(Unlock.prototype, 'unlock').returns();
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     expect(unlockStub.called).to.equal(true);
@@ -335,7 +335,7 @@ describe('Unlock client tests', function(){
         it('should be marked as open', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     expect(u.isOpen()).to.equal(true);
@@ -348,7 +348,7 @@ describe('Unlock client tests', function(){
         it('should call onClose when the socket closes', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     u.socket.send('close');
@@ -362,7 +362,7 @@ describe('Unlock client tests', function(){
         it('should be marked as closed after the socket closes', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     expect(u.isOpen()).to.equal(true);
@@ -378,7 +378,7 @@ describe('Unlock client tests', function(){
         it('should delete the socket instance after it closes', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 onOpen: function(){
                     u.socket.send('close');
@@ -393,7 +393,7 @@ describe('Unlock client tests', function(){
         it('should call onMessage when the socket receives data', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){
                     done();
                 },
@@ -413,7 +413,7 @@ describe('Unlock client tests', function(){
             };
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data).to.be.an('object');
                     expect(data).to.deep.equal(toSend);
@@ -428,7 +428,7 @@ describe('Unlock client tests', function(){
         it('should call onMessage with a number', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data).to.be.a('number');
                     expect(data).to.equal(10);
@@ -443,7 +443,7 @@ describe('Unlock client tests', function(){
         it('should call onMessage with a string', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data).to.be.a('string');
                     expect(data).to.equal('hello');
@@ -458,7 +458,7 @@ describe('Unlock client tests', function(){
         it('should call onMessage with a boolean', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data).to.be.a('boolean');
                     expect(data).to.equal(false);
@@ -473,7 +473,7 @@ describe('Unlock client tests', function(){
         it('should call onMessage with null', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data).to.be.null;
                     done();
@@ -489,17 +489,27 @@ describe('Unlock client tests', function(){
         it('should set the button id', function(){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
-            expect(u.buttonId).to.equal('unlock-button');
+            expect(u.buttonId).to.equal('#unlock-button');
+        });
+
+        it('should be able to specify a different button id', function(){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){},
+                buttonId: '#unlock-button-2'
+            });
+            expect(u.buttonId).to.equal('#unlock-button-2');
         });
 
         it('should call _buildbutton', function(){
             var buttonSpy=sinon.spy(Unlock.prototype, '_buildButton');
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             expect(buttonSpy.called).to.equal(true);
@@ -509,7 +519,7 @@ describe('Unlock client tests', function(){
         it('should insert button html into page', function(){
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             expect($('#unlock-button #unlock-logo').length).to.equal(1);
@@ -520,9 +530,9 @@ describe('Unlock client tests', function(){
         it('should be able to insert html into a different button', function(){
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
-                buttonId: 'unlock-button-2'
+                buttonId: '#unlock-button-2'
             });
             expect($('#unlock-button-2 #unlock-logo').length).to.equal(1);
             expect($('#unlock-button-2 #unlock-cover').length).to.equal(1);
@@ -535,7 +545,7 @@ describe('Unlock client tests', function(){
                 .removeClass('unlock-disabled');
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 button: false
             });
@@ -547,7 +557,7 @@ describe('Unlock client tests', function(){
         it('should set the color of the button to blue by default', function(){
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             expect($('#unlock-button').css('background-color')).to.equal('rgb(47, 129, 198)');
@@ -556,7 +566,7 @@ describe('Unlock client tests', function(){
         it('should be able to specify a color for the button', function(){
             new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){},
                 color: 'rgb(128, 30, 29)'
             });
@@ -567,7 +577,7 @@ describe('Unlock client tests', function(){
         it('should set shouldSend to true if the socket isn\'t open yet', function(){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             $('#unlock-button').click();
@@ -578,7 +588,7 @@ describe('Unlock client tests', function(){
             it('should do nothing if button is false', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     button: false
                 });
@@ -591,7 +601,7 @@ describe('Unlock client tests', function(){
             it('should give the button the class "unlock-enabled" and remove class "unlock-disabled"', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){}
                 });
                 u.enableButton();
@@ -604,7 +614,7 @@ describe('Unlock client tests', function(){
                 var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     onOpen: function(){
                         $('#unlock-button').click();
@@ -620,7 +630,7 @@ describe('Unlock client tests', function(){
                 var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     onOpen: function(){
                         $('#unlock-button').click();
@@ -639,7 +649,7 @@ describe('Unlock client tests', function(){
             it('should do nothing if button is false', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     button: false
                 });
@@ -652,7 +662,7 @@ describe('Unlock client tests', function(){
             it('should give the button the class "unlock-disabled" and remove class "unlock-enabled"', function(){
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){}
                 });
                 u.disableButton();
@@ -665,7 +675,7 @@ describe('Unlock client tests', function(){
                 var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
                 var u=new Unlock({
                     url: 'ws://localhost:3456',
-                    email: 'email',
+                    email: '#email',
                     onMessage: function(){},
                     onOpen: function(){
                         u.disableButton();
@@ -683,7 +693,7 @@ describe('Unlock client tests', function(){
         it('should send data with type "unlock"', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data.type).to.equal('unlock');
                     done();
@@ -698,7 +708,7 @@ describe('Unlock client tests', function(){
             $('#email').val('test@email.com');
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(data){
                     expect(data.email).to.equal('test@email.com');
                     done();
@@ -715,7 +725,7 @@ describe('Unlock client tests', function(){
             $('#email').val('user@gmail.com');
             var u=new Unlock({
                 url: 'ws://localhost:3456',
-                email: 'email',
+                email: '#email',
                 onMessage: function(){}
             });
             expect(u._getEmail()).to.equal('user@gmail.com');

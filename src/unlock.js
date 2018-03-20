@@ -23,7 +23,7 @@
             buttonId: {
                 required: false,
                 type: 'string',
-                default: 'unlock-button'
+                default: '#unlock-button'
             },
             color: {
                 required: false,
@@ -80,7 +80,7 @@
         if (!self.button){
             return;
         }
-        var b=document.getElementById(self.buttonId);
+        var b=document.querySelector(self.buttonId);
         b.removeEventListener('click', self.onclick);
         b.addEventListener('click', self.onclick);
         b.classList.remove('unlock-disabled');
@@ -92,7 +92,7 @@
         if (!self.button){
             return;
         }
-        var b=document.getElementById(self.buttonId);
+        var b=document.querySelector(self.buttonId);
         b.removeEventListener('click', self.onclick);
         b.classList.remove('unlock-enabled');
         b.classList.add('unlock-disabled');
@@ -135,7 +135,7 @@
     };
 
     Unlock.prototype._getEmail=function(){
-        return document.getElementById(this.email).value;
+        return document.querySelector(this.email).value;
     };
 
     Unlock.prototype._submit=function(){
@@ -151,7 +151,7 @@
 
     Unlock.prototype._buildButton=function(){
         var self=this;
-        var b=document.getElementById(self.buttonId);
+        var b=document.querySelector(self.buttonId);
         if (b.querySelector('#unlock-logo')){
             var clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
@@ -176,9 +176,9 @@
         style.appendChild(document.createTextNode(''));
         document.head.appendChild(style);
         var sheet=style.sheet;
-        sheet.insertRule('#'+self.buttonId+' {background-color: '+bg+'}', sheet.cssRules.length);
-        sheet.insertRule('#'+self.buttonId+'.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
-        sheet.insertRule('#'+self.buttonId+'.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+' {background-color: '+bg+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+'.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+'.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
     };
 
     function verify(obj, schema){
@@ -216,7 +216,7 @@
     }
 
     function verifyElem(id){
-        if (!document.getElementById(id)){
+        if (!document.querySelector(id)){
             throw new Error('No element found with id '+id);
         }
         return id;
