@@ -1,7 +1,7 @@
 # Unlock
 
 ## A client side library for authenticating with Unlock
-This is a library to include in your frontend which will open a WebSocket connection to your Unlock enabled server and get you up and running with simple, socket-based authentication.
+This is a library to include in your frontend which will open a WebSocket connection to your Unlock enabled server and get you up and running with simple, socket-based, passwordless authentication.
 
 If you haven't set up your server for Unlock yet, check out [the website](https://www.unlock-auth.com/documentation) for more information and documentation.
 
