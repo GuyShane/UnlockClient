@@ -1,9 +1,16 @@
 {
     "name": "unlock-client",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A frontend javascript library for authenticating with Unlock",
-    "keywords": ["authentication", "frontend", "unlock", "websocket"],
-    "files": ["src"],
+    "keywords": [
+        "authentication",
+        "frontend",
+        "unlock",
+        "websocket"
+    ],
+    "files": [
+        "src"
+    ],
     "main": "src/unlock.js",
     "scripts": {
         "test": "npm run test:lib; npm run test:min",
