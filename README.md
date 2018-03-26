@@ -6,7 +6,6 @@ This is a library to include in your frontend which will open a WebSocket connec
 If you haven't set up your server for Unlock yet, check out [the website](https://www.unlock-auth.com/documentation) for more information and documentation.
 
 [![Build Status](https://travis-ci.org/GuyShane/UnlockClient.svg?branch=master)](https://travis-ci.org/GuyShane/UnlockClient)
-[![npm version](https://badge.fury.io/js/unlock-client.svg)](https://badge.fury.io/js/unlock-client)
 
 ### Installing
 Download [unlock.min.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.css) and [unlock.min.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.min.js) (or [unlock.css](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.css) and [unlock.js](https://raw.githubusercontent.com/GuyShane/UnlockClient/master/src/unlock.js)), then include them in the relevant places
