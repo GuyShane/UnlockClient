@@ -7,7 +7,9 @@
         "sourceType": "module"
     },
     "globals": {
-        "WebSocket": false
+        "WebSocket": false,
+        "define": false,
+        "module": false
     },
     "rules": {
         "camelcase": "error",
