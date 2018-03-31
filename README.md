@@ -59,6 +59,7 @@ Constructs a new Unlock object with the specified options. The behaviour can be 
 | button | boolean | optional | true | Whether or not to use the built in button. |
 | buttonId | string | optional | '#unlock-button' | The id of the button used to submit requests. If a custom button id is specified, it must start with 'unlock-button' to receive styling. For example: '#unlock-button-2'. |
 | color | string | optional | '#2f81c6' | The background color of the button. Unlock will also automatically set the :hover and :active states to be lighter and darker than the specified color, respectively. Accepted inputs are hex (3 or 6 characters), and rgb() |
+| onSend | function | optional | - | A function to be called when the object sends data through the socket. This function can be used whether or not you are using the provided button. It will always be called just before data is sent in `unlocker.unlock()` |
 | onOpen | function | optional | - | A function called when the socket connection is open. `unlocker.isOpen()` will return true at this point. |
 | onClose | function | optional | - | A function called if/when the socket connection closes. `unlocker.isOpen()` will return false at this point. As well, the internal socket object will be removed. If another connection is required, you can construct a new Unlock object. |
 
