@@ -1,6 +1,6 @@
 {
     "name": "unlock-client",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "A frontend javascript library for authenticating with Unlock",
     "keywords": [
         "authentication",
