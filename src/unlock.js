@@ -30,6 +30,11 @@
                 type: 'string',
                 default: '#2f81c6'
             },
+            onSend: {
+                required: false,
+                type: 'function',
+                default: function(){}
+            },
             onOpen: {
                 required: false,
                 type: 'function',
@@ -49,6 +54,7 @@
         self.color=normalizeColor(opts.color);
 
         self.onMessage=opts.onMessage;
+        self.onSend=opts.onSend;
         self.onOpen=opts.onOpen;
         self.onClose=opts.onClose;
 
@@ -65,6 +71,7 @@
 
     Unlock.prototype.unlock=function(){
         var self=this;
+        self.onSend();
         self.socket.send(JSON.stringify({
             type: 'unlock',
             email: self._getEmail()

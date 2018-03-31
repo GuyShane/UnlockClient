@@ -75,6 +75,15 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
+        it('should fail if onSend is passed and is not a function', function(){
+            expect(Unlock.bind(undefined, {
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){},
+                onSend: {}
+            })).to.throw();
+        });
+
         it('should fail if onOpen is passed and is not a function', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
@@ -582,6 +591,21 @@ describe('Unlock client tests', function(){
             });
             $('#unlock-button').click();
             expect(u.shouldSend).to.equal(true);
+        });
+
+        it('should call onSend when clicked', function(){
+            sinon.stub(WebSocket.prototype, 'send').returns();
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){}
+            });
+            u.open=true;
+            var sendSpy=sinon.spy(u, 'onSend');
+            $('#unlock-button').click();
+            expect(sendSpy.called).to.equal(true);
+            WebSocket.prototype.send.restore();
+            u.onSend.restore();
         });
 
         describe('enableButton()', function(){
