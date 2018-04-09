@@ -33,6 +33,7 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
+
         it('should fail if url is not a string', function(){
             expect(Unlock.bind(undefined, {
                 url: 8,
@@ -63,6 +64,15 @@ describe('Unlock client tests', function(){
                 email: '#email',
                 onMessage: function(){},
                 button: 'false'
+            })).to.throw();
+        });
+
+        it('should fail if submitOnEnter is passed and is not a boolean', function(){
+            expect(Unlock.bind(undefined, {
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){},
+                submitOnEnter: 12
             })).to.throw();
         });
 
@@ -561,6 +571,24 @@ describe('Unlock client tests', function(){
             expect($('#unlock-button #unlock-logo').length).to.equal(0);
             expect($('#unlock-button #unlock-cover').length).to.equal(0);
             expect($('#unlock-button #unlock-spinner').length).to.equal(0);
+        });
+
+        it('should send a request when enter is pressed if submitOnEnter is true', function(){
+            var sendStub=sinon.stub(WebSocket.prototype, 'send').returns();
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){},
+                submitOnEnter: true
+            });
+            u.open=true;
+            var enter=$.Event('keyup', {
+                which: 13,
+                keyCode: 13
+            });
+            $('#email').trigger(enter);
+            expect(sendStub.called).to.equal(true);
+            WebSocket.prototype.send.restore();
         });
 
         it('should set the color of the button to blue by default', function(){

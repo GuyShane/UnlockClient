@@ -33,6 +33,11 @@
                 type: 'string',
                 default: '#unlock-button'
             },
+            submitOnEnter: {
+                required: false,
+                type: 'boolean',
+                default: false
+            },
             color: {
                 required: false,
                 type: 'string',
@@ -59,6 +64,7 @@
         self.email=verifyElem(opts.email);
         self.button=opts.button;
         self.buttonId=verifyElem(opts.buttonId);
+        self.submitOnEnter=opts.submitOnEnter;
         self.color=normalizeColor(opts.color);
 
         self.onMessage=opts.onMessage;
@@ -74,6 +80,15 @@
         if (self.button){
             self.onclick=self._submit.bind(self);
             self._buildButton();
+            if (self.submitOnEnter){
+                var input=document.querySelector(self.email);
+                input.onkeyup=function(e){
+                    var key=e.which||e.keyCode;
+                    if (key===13){
+                        self.onclick();
+                    }
+                };
+            }
         }
     }
 
