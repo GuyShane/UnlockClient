@@ -53,11 +53,13 @@ Constructs a new Unlock object with the specified options. The behaviour can be 
 
 | Name | Type | Attributes | Default | Description |
 | ---- | ---- | ---------- | ------- | ----------- |
-| url | string | required | - | The url for the socket to connect to. This is the url of your WebSocket server which communicates with Unlock. |
-| email | string | required | - | The id of the input element where the user enters their email address. Should contain a leading hash. For example: '#email' |
-| onMessage | function | required | - | A function to be called when the socket receices data. The function is passed one argument: `onMessage(data)` It is the data that was sent through the socket. If the data was JSON, Unlock will parse it first and onMessage will be called with the object, otherwise onMessage will be called with whatever was sent. Typical actions would be storing an authentication cookie and refreshing/redirecting, or handling any errors that occurred. You can then decide whether or not you'd like to close the socket connection from either end. |
+| url | string | **required** | - | The url for the socket to connect to. This is the url of your WebSocket server which communicates with Unlock. |
+| email | string | **required** | - | The id of the input element where the user enters their email address. Should contain a leading hash. For example: '#email' |
+| onMessage | function | **required** | - | A function to be called when the socket receices data. The function is passed one argument: `onMessage(data)` It is the data that was sent through the socket. If the data was JSON, Unlock will parse it first and onMessage will be called with the object, otherwise onMessage will be called with whatever was sent. Typical actions would be storing an authentication cookie and refreshing/redirecting, or handling any errors that occurred. You can then decide whether or not you'd like to close the socket connection from either end. |
 | button | boolean | optional | true | Whether or not to use the built in button. |
 | buttonId | string | optional | '#unlock-button' | The id of the button used to submit requests. If a custom button id is specified, it must start with 'unlock-button' to receive styling. For example: '#unlock-button-2'. |
+| submitOnEnter | boolean | optional | false | Set this to true if you would like users to be able to submit Unlock requests by pressing enter in the input specified by `email` |
+| whatsThis | boolean | optional | false | If this is true, it will add a link to [Unlock](https://www.unlock-auth.com) to give new users a way to get acquainted with the system |
 | color | string | optional | '#2f81c6' | The background color of the button. Unlock will also automatically set the :hover and :active states to be lighter and darker than the specified color, respectively. Accepted inputs are hex (3 or 6 characters), and rgb() |
 | onSend | function | optional | - | A function to be called when the object sends data through the socket. This function can be used whether or not you are using the provided button. It will always be called just before data is sent in `unlocker.unlock()` |
 | onOpen | function | optional | - | A function called when the socket connection is open. `unlocker.isOpen()` will return true at this point. |
