@@ -38,6 +38,11 @@
                 type: 'boolean',
                 default: false
             },
+            whatsThis: {
+                required: false,
+                type: 'boolean',
+                default: false
+            },
             color: {
                 required: false,
                 type: 'string',
@@ -65,6 +70,7 @@
         self.button=opts.button;
         self.buttonId=verifyElem(opts.buttonId);
         self.submitOnEnter=opts.submitOnEnter;
+        self.whatsThis=opts.whatsThis;
         self.color=normalizeColor(opts.color);
 
         self.onMessage=opts.onMessage;
@@ -110,7 +116,8 @@
         if (!self.button){
             return;
         }
-        var b=document.querySelector(self.buttonId);
+        var b=document.querySelector(self.buttonId)
+            .querySelector('.unlock-button');
         b.removeEventListener('click', self.onclick);
         b.addEventListener('click', self.onclick);
         b.classList.remove('unlock-disabled');
@@ -122,7 +129,8 @@
         if (!self.button){
             return;
         }
-        var b=document.querySelector(self.buttonId);
+        var b=document.querySelector(self.buttonId)
+            .querySelector('.unlock-button');
         b.removeEventListener('click', self.onclick);
         b.classList.remove('unlock-enabled');
         b.classList.add('unlock-disabled');
@@ -182,15 +190,17 @@
     Unlock.prototype._buildButton=function(){
         var self=this;
         var b=document.querySelector(self.buttonId);
-        if (b.querySelector('#unlock-logo')){
+        if (b.querySelector('.unlock-logo')){
             var clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
         }
         else {
-            b.classList.add('unlock-enabled');
-            var html='<img id="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
-                '<span id="unlock-cover"></span><div id="unlock-spinner"><div class="unlock-dot" id="unlock-dot-one">'+
-                '</div><div class="unlock-dot" id="unlock-dot-two"></div><div class="unlock-dot" id="unlock-dot-three"></div></div>';
+            var html='<div class="unlock-button unlock-enabled"><img class="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
+                '<span class="unlock-cover"></span><div class="unlock-spinner"><div class="unlock-dot unlock-dot-one">'+
+                '</div><div class="unlock-dot unlock-dot-two"></div><div class="unlock-dot unlock-dot-three"></div></div></div>';
+            if (self.whatsThis){
+                html+='<div class="unlock-link"><a href="https://www.unlock-auth.com" target="_blank">What\'s this?</a></div>';
+            }
             b.innerHTML=html;
         }
         self._addColor();
@@ -206,9 +216,12 @@
         style.appendChild(document.createTextNode(''));
         document.head.appendChild(style);
         var sheet=style.sheet;
-        sheet.insertRule(self.buttonId+' {background-color: '+bg+'}', sheet.cssRules.length);
-        sheet.insertRule(self.buttonId+'.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
-        sheet.insertRule(self.buttonId+'.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+' .unlock-button {background-color: '+bg+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+' .unlock-button.unlock-enabled:hover {background-color: '+light+'}', sheet.cssRules.length);
+        sheet.insertRule(self.buttonId+' .unlock-button.unlock-enabled:active {background-color: '+dark+'}', sheet.cssRules.length);
+        if (self.whatsThis){
+            sheet.insertRule(self.buttonId+' .unlock-link a {color: '+bg+'}', sheet.cssRules.length);
+        }
     };
 
     function verify(obj, schema){

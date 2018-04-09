@@ -541,9 +541,9 @@ describe('Unlock client tests', function(){
                 email: '#email',
                 onMessage: function(){}
             });
-            expect($('#unlock-button #unlock-logo').length).to.equal(1);
-            expect($('#unlock-button #unlock-cover').length).to.equal(1);
-            expect($('#unlock-button #unlock-spinner').length).to.equal(1);
+            expect($('#unlock-button .unlock-logo').length).to.equal(1);
+            expect($('#unlock-button .unlock-cover').length).to.equal(1);
+            expect($('#unlock-button .unlock-spinner').length).to.equal(1);
         });
 
         it('should be able to insert html into a different button', function(){
@@ -553,9 +553,9 @@ describe('Unlock client tests', function(){
                 onMessage: function(){},
                 buttonId: '#unlock-button-2'
             });
-            expect($('#unlock-button-2 #unlock-logo').length).to.equal(1);
-            expect($('#unlock-button-2 #unlock-cover').length).to.equal(1);
-            expect($('#unlock-button-2 #unlock-spinner').length).to.equal(1);
+            expect($('#unlock-button-2 .unlock-logo').length).to.equal(1);
+            expect($('#unlock-button-2 .unlock-cover').length).to.equal(1);
+            expect($('#unlock-button-2 .unlock-spinner').length).to.equal(1);
         });
 
         it('shouldn\'t insert any html if button is false', function(){
@@ -568,9 +568,9 @@ describe('Unlock client tests', function(){
                 onMessage: function(){},
                 button: false
             });
-            expect($('#unlock-button #unlock-logo').length).to.equal(0);
-            expect($('#unlock-button #unlock-cover').length).to.equal(0);
-            expect($('#unlock-button #unlock-spinner').length).to.equal(0);
+            expect($('#unlock-button .unlock-logo').length).to.equal(0);
+            expect($('#unlock-button .unlock-cover').length).to.equal(0);
+            expect($('#unlock-button .unlock-spinner').length).to.equal(0);
         });
 
         it('should send a request when enter is pressed if submitOnEnter is true', function(){
@@ -597,7 +597,7 @@ describe('Unlock client tests', function(){
                 email: '#email',
                 onMessage: function(){}
             });
-            expect($('#unlock-button').css('background-color')).to.equal('rgb(47, 129, 198)');
+            expect($('#unlock-button .unlock-button').css('background-color')).to.equal('rgb(47, 129, 198)');
         });
 
         it('should be able to specify a color for the button', function(){
@@ -607,7 +607,7 @@ describe('Unlock client tests', function(){
                 onMessage: function(){},
                 color: 'rgb(128, 30, 29)'
             });
-            expect($('#unlock-button').css('background-color')).to.equal('rgb(128, 30, 29)');
+            expect($('#unlock-button .unlock-button').css('background-color')).to.equal('rgb(128, 30, 29)');
         });
 
 
@@ -617,7 +617,7 @@ describe('Unlock client tests', function(){
                 email: '#email',
                 onMessage: function(){}
             });
-            $('#unlock-button').click();
+            $('#unlock-button .unlock-button').click();
             expect(u.shouldSend).to.equal(true);
         });
 
@@ -630,7 +630,7 @@ describe('Unlock client tests', function(){
             });
             u.open=true;
             var sendSpy=sinon.spy(u, 'onSend');
-            $('#unlock-button').click();
+            $('#unlock-button .unlock-button').click();
             expect(sendSpy.called).to.equal(true);
             WebSocket.prototype.send.restore();
             u.onSend.restore();
@@ -657,7 +657,7 @@ describe('Unlock client tests', function(){
                     onMessage: function(){}
                 });
                 u.enableButton();
-                var button=$('#unlock-button');
+                var button=$('#unlock-button .unlock-button');
                 expect(button.hasClass('unlock-enabled')).to.equal(true);
                 expect(button.hasClass('unlock-disabled')).to.equal(false);
             });
@@ -669,7 +669,7 @@ describe('Unlock client tests', function(){
                     email: '#email',
                     onMessage: function(){},
                     onOpen: function(){
-                        $('#unlock-button').click();
+                        $('#unlock-button .unlock-button').click();
                         expect(submitStub.called).to.equal(true);
                         Unlock.prototype._submit.restore();
                         done();
@@ -685,7 +685,7 @@ describe('Unlock client tests', function(){
                     email: '#email',
                     onMessage: function(){},
                     onOpen: function(){
-                        $('#unlock-button').click();
+                        $('#unlock-button .unlock-button').click();
                         expect(submitStub.callCount).to.equal(1);
                         Unlock.prototype._submit.restore();
                         done();
@@ -718,7 +718,7 @@ describe('Unlock client tests', function(){
                     onMessage: function(){}
                 });
                 u.disableButton();
-                var button=$('#unlock-button');
+                var button=$('#unlock-button .unlock-button');
                 expect(button.hasClass('unlock-disabled')).to.equal(true);
                 expect(button.hasClass('unlock-enabled')).to.equal(false);
             });
@@ -731,7 +731,7 @@ describe('Unlock client tests', function(){
                     onMessage: function(){},
                     onOpen: function(){
                         u.disableButton();
-                        $('#unlock-button').click();
+                        $('#unlock-button .unlock-button').click();
                         expect(submitStub.called).to.equal(false);
                         Unlock.prototype._submit.restore();
                         done();
