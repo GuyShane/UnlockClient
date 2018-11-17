@@ -48,6 +48,11 @@
                 type: 'string',
                 default: '#2f81c6'
             },
+            payload: {
+                required: false,
+                type: 'object',
+                default: {}
+            },
             onSend: {
                 required: false,
                 type: 'function',
@@ -67,6 +72,7 @@
 
         self.url=opts.url;
         self.email=verifyElem(opts.email);
+        self.payload=opts.payload;
         self.button=opts.button;
         self.buttonId=verifyElem(opts.buttonId);
         self.submitOnEnter=opts.submitOnEnter;
@@ -101,10 +107,10 @@
     Unlock.prototype.unlock=function(){
         var self=this;
         self.onSend();
-        self.socket.send(JSON.stringify({
+        self.socket.send(JSON.stringify(merge({
             type: 'unlock',
             email: self._getEmail()
-        }));
+        }, self.payload)));
     };
 
     Unlock.prototype.isOpen=function(){
@@ -256,6 +262,15 @@
             }
         }
         return ret;
+    }
+
+    function merge(obj1, obj2){
+        for (var key in obj2){
+            if (obj2.hasOwnProperty(key) && ! obj1.hasOwnProperty(key)){
+                obj1[key]=obj2[key];
+            }
+        }
+        return obj1;
     }
 
     function verifyElem(id){

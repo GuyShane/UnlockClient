@@ -33,7 +33,6 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
-
         it('should fail if url is not a string', function(){
             expect(Unlock.bind(undefined, {
                 url: 8,
@@ -55,6 +54,15 @@ describe('Unlock client tests', function(){
                 url: 'ws://localhost:3456',
                 email: '#email',
                 onMessage: 'onMessage'
+            })).to.throw();
+        });
+
+        it('should fail if payload is passed and is not an object', function(){
+            expect(Unlock.bind(undefined, {
+                url: 'ws://localhost:3456',
+                email: '#email',
+                onMessage: function(){},
+                payload: 'otherstuff'
             })).to.throw();
         });
 
@@ -762,6 +770,42 @@ describe('Unlock client tests', function(){
                 url: 'ws://localhost:3456',
                 email: '#email',
                 onMessage: function(data){
+                    expect(data.email).to.equal('test@email.com');
+                    done();
+                },
+                onOpen: function(){
+                    u.unlock();
+                }
+            });
+        });
+
+        it('should send data specified in payload', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: '#email',
+                payload: {
+                    extra: true
+                },
+                onMessage: function(data){
+                    expect(data.extra).to.equal(true);
+                    done();
+                },
+                onOpen: function(){
+                    u.unlock();
+                }
+            });
+        });
+
+        it('should not override type or email', function(done){
+            var u=new Unlock({
+                url: 'ws://localhost:3456',
+                email: '#email',
+                payload: {
+                    type: 'other',
+                    email: 'oopsies'
+                },
+                onMessage: function(data){
+                    expect(data.type).to.equal('unlock');
                     expect(data.email).to.equal('test@email.com');
                     done();
                 },
