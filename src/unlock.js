@@ -48,7 +48,7 @@
                 type: 'string',
                 default: '#2f81c6'
             },
-            payload: {
+            extra: {
                 required: false,
                 type: 'object',
                 default: {}
@@ -72,7 +72,7 @@
 
         self.url=opts.url;
         self.email=verifyElem(opts.email);
-        self.payload=opts.payload;
+        self.extra=opts.extra;
         self.button=opts.button;
         self.buttonId=verifyElem(opts.buttonId);
         self.submitOnEnter=opts.submitOnEnter;
@@ -107,10 +107,14 @@
     Unlock.prototype.unlock=function(){
         var self=this;
         self.onSend();
-        self.socket.send(JSON.stringify(merge({
+        var data={
             type: 'unlock',
             email: self._getEmail()
-        }, self.payload)));
+        };
+        if (!isEmpty(self.extra)){
+            data.extra=self.extra;
+        }
+        self.socket.send(JSON.stringify(data));
     };
 
     Unlock.prototype.isOpen=function(){
@@ -264,13 +268,8 @@
         return ret;
     }
 
-    function merge(obj1, obj2){
-        for (var key in obj2){
-            if (obj2.hasOwnProperty(key) && ! obj1.hasOwnProperty(key)){
-                obj1[key]=obj2[key];
-            }
-        }
-        return obj1;
+    function isEmpty(obj){
+        return Object.keys(obj).length===0;
     }
 
     function verifyElem(id){

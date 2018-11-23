@@ -1,6 +1,6 @@
 {
     "name": "unlock-client",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "A frontend javascript library for authenticating with Unlock",
     "keywords": [
         "authentication",
@@ -16,6 +16,7 @@
         "test": "npm run test:lib; npm run test:min",
         "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
         "test:min": "./node_modules/mocha-headless-chrome/bin/start -f ./test/min.html",
+        "gulp": "./node_modules/gulp/bin/gulp.js",
         "echo": "npm run echo:stop; npm run echo:start",
         "echo:start": "node test/echo.js &",
         "echo:stop": "pkill -f 'node test/echo'"

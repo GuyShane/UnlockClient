@@ -57,12 +57,12 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
-        it('should fail if payload is passed and is not an object', function(){
+        it('should fail if extra is passed and is not an object', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
                 email: '#email',
                 onMessage: function(){},
-                payload: 'otherstuff'
+                extra: 'otherstuff'
             })).to.throw();
         });
 
@@ -779,15 +779,15 @@ describe('Unlock client tests', function(){
             });
         });
 
-        it('should send data specified in payload', function(done){
+        it('should send data specified in extra', function(done){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
                 email: '#email',
-                payload: {
-                    extra: true
+                extra: {
+                    data: true
                 },
                 onMessage: function(data){
-                    expect(data.extra).to.equal(true);
+                    expect(data.extra.data).to.equal(true);
                     done();
                 },
                 onOpen: function(){
@@ -800,7 +800,7 @@ describe('Unlock client tests', function(){
             var u=new Unlock({
                 url: 'ws://localhost:3456',
                 email: '#email',
-                payload: {
+                extra: {
                     type: 'other',
                     email: 'oopsies'
                 },

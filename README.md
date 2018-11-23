@@ -57,7 +57,7 @@ Constructs a new Unlock object with the specified options. The behaviour can be 
 | submitOnEnter | boolean | optional | false | Set this to true if you would like users to be able to submit Unlock requests by pressing enter in the input specified by `email` |
 | whatsThis | boolean | optional | false | If this is true, it will add a link to [Unlock](https://www.unlock-auth.com) to give new users a way to get acquainted with the system |
 | color | string | optional | '#2f81c6' | The background color of the button. Unlock will also automatically set the :hover and :active states to be lighter and darker than the specified color, respectively. Accepted inputs are hex (3 or 6 characters), and rgb() |
-| payload | object | optional | - | An object containing extra data to be sent through the socket. `type` and `email` are set by the library and will override values specified in `payload` |
+| extra | object | optional | - | An object containing extra data to be sent through the socket. Sent to the server as `extra` along with the required `type` and `email` |
 | onSend | function | optional | - | A function to be called when the object sends data through the socket. This function can be used whether or not you are using the provided button. It will always be called just before data is sent in `unlocker.unlock()` |
 | onOpen | function | optional | - | A function called when the socket connection is open. `unlocker.isOpen()` will return true at this point. |
 | onClose | function | optional | - | A function called if/when the socket connection closes. `unlocker.isOpen()` will return false at this point. As well, the internal socket object will be removed. If another connection is required, you can construct a new Unlock object. |
