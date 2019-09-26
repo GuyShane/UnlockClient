@@ -3,9 +3,6 @@
         "browser": true
     },
     "extends": "eslint:recommended",
-    "parserOptions": {
-        "sourceType": "module"
-    },
     "globals": {
         "WebSocket": false,
         "define": false,

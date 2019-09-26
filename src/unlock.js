@@ -1,7 +1,7 @@
 (function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
+    if (typeof define==='function' && define.amd) {
         define([], factory);
-    } else if (typeof exports === 'object') {
+    } else if (typeof exports==='object') {
         module.exports=factory();
     } else {
         root.Unlock=factory();
@@ -241,13 +241,13 @@
         var ret={};
         var key;
         for (key in obj){
-            if (!obj.hasOwnProperty(key)){continue;}
+            if (!Object.prototype.hasOwnProperty.call(obj, key)){continue;}
             if (typeof schema[key]==='undefined'){
                 throw new Error('Unrecognized option '+key);
             }
         }
         for (key in schema){
-            if (!schema.hasOwnProperty(key)){continue;}
+            if (!Object.prototype.hasOwnProperty.call(schema, key)){continue;}
             var reqs=schema[key];
             var val=obj[key];
             if (typeof val==='undefined'){
