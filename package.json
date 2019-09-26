@@ -38,8 +38,8 @@
         "gulp-rename": "^1.4.0",
         "gulp-sass": "^4.0.2",
         "gulp-uglify": "^3.0.2",
-        "mocha": "^5.2.0",
-        "mocha-headless-chrome": "^1.8.3",
+        "mocha": "^6.2.0",
+        "mocha-headless-chrome": "^2.0.3",
         "pump": "^3.0.0",
         "ws": "^5.2.2"
     }
