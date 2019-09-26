@@ -16,7 +16,7 @@
         "test": "npm run test:lib; npm run test:min",
         "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
         "test:min": "./node_modules/mocha-headless-chrome/bin/start -f ./test/min.html",
-        "gulp": "./node_modules/gulp/bin/gulp.js",
+        "gulp": "gulp",
         "echo": "npm run echo:stop; npm run echo:start",
         "echo:start": "node test/echo.js &",
         "echo:stop": "pkill -f 'node test/echo'"
@@ -35,12 +35,12 @@
         "gulp": "^4.0.2",
         "gulp-autoprefixer": "^5.0.0",
         "gulp-eslint": "^4.0.2",
-        "gulp-rename": "^1.2.2",
-        "gulp-sass": "^3.1.0",
-        "gulp-uglify": "^3.0.0",
-        "mocha": "^5.0.4",
-        "mocha-headless-chrome": "^1.8.2",
+        "gulp-rename": "^1.4.0",
+        "gulp-sass": "^3.2.1",
+        "gulp-uglify": "^3.0.2",
+        "mocha": "^5.2.0",
+        "mocha-headless-chrome": "^1.8.3",
         "pump": "^3.0.0",
-        "ws": "^5.1.0"
+        "ws": "^5.2.2"
     }
 }

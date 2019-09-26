@@ -22,7 +22,7 @@ gulp.task('lint-lib', (cb)=>{
     ], cb);
 });
 
-gulp.task('lint', ['lint-tests', 'lint-lib']);
+gulp.task('lint', gulp.parallel('lint-tests', 'lint-lib'));
 
 gulp.task('uglify', (cb)=>{
     pump([
@@ -57,7 +57,7 @@ gulp.task('min-scss', (cb)=>{
     ], cb);
 });
 
-gulp.task('prefix', ['scss', 'min-scss'], (cb)=>{
+gulp.task('prefix', gulp.series('scss', 'min-scss', (cb)=>{
     pump([
         gulp.src(['./src/unlock.css', './src/unlock.min.css']),
         prefix({
@@ -65,10 +65,10 @@ gulp.task('prefix', ['scss', 'min-scss'], (cb)=>{
         }),
         gulp.dest('./src/')
     ], cb);
-});
+}));
 
-const jsTasks=['uglify', 'lint'];
-const cssTasks=['scss', 'min-scss', 'prefix'];
+const jsTasks=gulp.series('uglify', 'lint');
+const cssTasks=gulp.series('scss', 'min-scss', 'prefix');
 
 gulp.task('watch-js', ()=>{
     return gulp.watch(['./src/unlock.js', './test/test.js'], jsTasks);
@@ -78,7 +78,7 @@ gulp.task('watch-css', ()=>{
     return gulp.watch('./src/unlock.scss', cssTasks);
 });
 
-gulp.task('js', jsTasks.concat(['watch-js']));
-gulp.task('css', cssTasks.concat(['watch-css']));
+gulp.task('js', gulp.series(jsTasks, 'watch-js'));
+gulp.task('css', gulp.series(cssTasks, 'watch-css'));
 
-gulp.task('default', ['js', 'css']);
+gulp.task('default', gulp.parallel('js', 'css'));
