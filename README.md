@@ -88,4 +88,4 @@ eco:start starts a simple node WebSocket server on localhost:3456 for use with t
 ### License
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2018 Shane Brass
+Copyright (c) 2019 Shane Brass
