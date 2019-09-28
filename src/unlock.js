@@ -205,11 +205,11 @@
             b.parentNode.replaceChild(clone, b);
         }
         else {
-            var html='<div class="unlock-button unlock-enabled"><img class="unlock-logo" src="https://www.unlock-auth.com/images/unlock-logo-text.svg">'+
+            var html='<div class="unlock-button unlock-enabled"><img class="unlock-logo" src="https://www.unlock-app.com/images/unlock-logo-text.svg">'+
                 '<span class="unlock-cover"></span><div class="unlock-spinner"><div class="unlock-dot unlock-dot-one">'+
                 '</div><div class="unlock-dot unlock-dot-two"></div><div class="unlock-dot unlock-dot-three"></div></div></div>';
             if (self.whatsThis){
-                html+='<div class="unlock-link"><a href="https://www.unlock-auth.com" target="_blank">What\'s this?</a></div>';
+                html+='<div class="unlock-link"><a href="https://www.unlock-app.com" target="_blank">What\'s this?</a></div>';
             }
             b.innerHTML=html;
         }
