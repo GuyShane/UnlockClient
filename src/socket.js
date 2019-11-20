@@ -6,9 +6,9 @@ class Socket {
         this.actions=[];
         this.socket=new WebSocket(this.url);
 
-        this.socket.onopen=this.onOpen;
-        this.socket.onclose=this.onClose;
-        this.socket.onmessage=this.onMessage;
+        this.socket.onopen=this.onOpen.bind(this);
+        this.socket.onclose=this.onClose.bind(this);
+        this.socket.onmessage=this.onMessage.bind(this);
     }
 
     onOpen(){

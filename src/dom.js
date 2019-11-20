@@ -1,8 +1,9 @@
 function find(id){
-    if (!document.querySelector(id)){
+    const elem=document.querySelector(id);
+    if (!elem){
         throw new Error('No element found with id '+id);
     }
-    return id;
+    return elem;
 }
 
 function val(id){
@@ -15,7 +16,7 @@ function insertRules(rules){
     document.head.appendChild(style);
     const sheet=style.sheet;
     rules.forEach(r=>{
-        sheet.inserRule(r, sheet.cssRules.length);
+        sheet.insertRule(r, sheet.cssRules.length);
     });
 }
 

@@ -5,6 +5,8 @@ import {find, val, insertRules, addOnEnter} from './dom';
 import {normalize, alter} from './color';
 import {isEmpty} from './utils';
 
+import './unlock.scss';
+
 export function init(opts){
     const unlocker=new Unlocker(opts);
 }
@@ -25,12 +27,15 @@ class Unlocker {
 
         self.opts=enforce(opts, schema);
         find(self.opts.email);
+        find('#unlock-button');
         self.opts.color=normalize(self.opts.color);
 
         self.socket=new Socket(self.opts.url, data=>{
             self.enableButton();
             self.opts.onMessage(data);
         });
+
+        self.unlock=self._unlock.bind(self);
 
         self.buildButton();
         if (self.opts.submitOnEnter){
@@ -39,10 +44,10 @@ class Unlocker {
     }
 
     get email(){
-        return val(this.email);
+        return val(this.opts.email);
     }
 
-    unlock(){
+    _unlock(){
         this.disableButton();
         const data={
             type: 'Unlock',
@@ -93,7 +98,7 @@ class Unlocker {
     }
 
     addColor(){
-        const bg=self.opts.color;
+        const bg=this.opts.color;
         const light=alter(bg, true);
         const dark=alter(bg, false);
         const styles=[

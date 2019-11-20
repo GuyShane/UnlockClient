@@ -23,18 +23,18 @@ $delay-three: $duration*0.66666;
     }
 }
 
-[id^="unlock-button"] {
+#unlock-button {
     display: inline-block;
-    .unlock-button {
+    #_unlock-button {
         position: relative;
         background-color: transparent;
         padding: 7px 17px;
         border-radius: 8px;
-        .unlock-logo {
+        #_unlock-logo {
             width: 77px;
             height: 18px;
         }
-        .unlock-cover {
+        #_unlock-cover {
             position: absolute;
             left: 0;
             top: 0;
@@ -44,7 +44,7 @@ $delay-three: $duration*0.66666;
             border-radius: 8px;
             transition: opacity 0.2s;
         }
-        .unlock-spinner {
+        #_unlock-spinner {
             width: $dot-size;
             height: $dot-size;
             position: absolute;
@@ -60,36 +60,36 @@ $delay-three: $duration*0.66666;
                 position: absolute;
                 left: 0px;
             }
-            .unlock-dot-one {
+            #_unlock-dot-one {
                 animation: move $duration ease-in-out 0s infinite normal;
             }
-            .unlock-dot-two {
+            #_unlock-dot-two {
                 animation: move $duration ease-in-out $delay-two infinite normal;
                 animation-fill-mode: backwards;
             }
-            .unlock-dot-three {
+            #_unlock-dot-three {
                 animation: move $duration ease-in-out $delay-three infinite normal;
                 animation-fill-mode: backwards;
             }
         }
         &.unlock-enabled {
-            .unlock-cover {
+            #_unlock-cover {
                 opacity: 0;
             }
-            .unlock-spinner {
+            #_unlock-spinner {
                 opacity: 0;
             }
         }
         &.unlock-disabled {
-            .unlock-cover {
+            #_unlock-cover {
                 opacity: 1;
             }
-            .unlock-spinner {
+            #_unlock-spinner {
                 opacity: 1;
             }
         }
     }
-    .unlock-link {
+    #_unlock-link {
         text-align: center;
         color: transparent;
         a {

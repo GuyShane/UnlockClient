@@ -23,7 +23,7 @@ function enforce(obj, schema){
                 throw new Error('Value '+key+' must be defined and of type '+reqs.type);
             }
             else {
-                ret[key]=reqs.default;
+                ret[key]=reqs.fallback;
             }
         }
         else {
