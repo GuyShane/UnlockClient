@@ -1,8 +1,8 @@
 $dot-size: 12px;
 $dot-distance: 40px;
 $duration: 1.2s;
-$delay-two: $duration*0.333333;
-$delay-three: $duration*0.66666;
+$delay-two: $duration*0.33;
+$delay-three: $duration*0.67;
 
 @keyframes move {
     0% {
