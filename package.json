@@ -16,7 +16,8 @@
         "test": "npm run test:lib; npm run test:min",
         "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
         "test:min": "./node_modules/mocha-headless-chrome/bin/start -f ./test/min.html",
-        "gulp": "gulp",
+        "dev": "parcel watch src/unlock.js",
+        "build": "parcel build src/unlock.js --experimental-scope-hoisting --global Unlock",
         "echo": "npm run echo:stop; npm run echo:start",
         "echo:start": "node test/echo.js &",
         "echo:stop": "pkill -f 'node test/echo'"
@@ -32,15 +33,10 @@
     },
     "homepage": "https://github.com/GuyShane/UnlockClient#readme",
     "devDependencies": {
-        "gulp": "^4.0.2",
-        "gulp-autoprefixer": "^7.0.0",
-        "gulp-eslint": "^6.0.0",
-        "gulp-rename": "^1.4.0",
-        "gulp-sass": "^4.0.2",
-        "gulp-uglify": "^3.0.2",
-        "mocha": "^6.2.0",
+        "mocha": "^6.2.2",
         "mocha-headless-chrome": "^2.0.3",
-        "pump": "^3.0.0",
-        "ws": "^7.1.2"
-    }
+        "parcel-bundler": "^1.12.4",
+        "ws": "^7.2.0"
+    },
+    "dependencies": {}
 }
