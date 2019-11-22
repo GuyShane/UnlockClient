@@ -118,14 +118,36 @@ $delay-three: $duration*0.67;
         #ul-modal-content {
             position: absolute;
             left: 50%;
-            top: 4rem;
+            top: 80px;
             transform: translateX(-50%);
             background: white;
-            border-radius: 20px;
+            border-radius: 10px;
             box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
             width: 85%;
-            max-width: 500px;
+            max-width: 450px;
             height: 30rem;
+            #ul-modal-logo {
+                position: relative;
+                display: inline-block;
+                left: 50%;
+                top: 0;
+                transform: translate(-50%, -45%);
+                $size: 100px;
+                width: $size;
+                height: $size;
+                border-radius: 50%;
+                background: #2f81c6;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+            }
+            #ul-modal-close {
+                position: absolute;
+                display: inline-block;
+                right: 15px;
+                top: 2px;
+                font-size: 40px;
+                color: #666;
+                cursor: pointer;
+            }
         }
     }
     .ul-d-none {

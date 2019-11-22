@@ -48,6 +48,7 @@ class Unlocker {
     }
 
     _unlock(){
+        if (this.email===''){return;}
         this.disableButton();
         const data={
             type: 'Unlock',
@@ -93,6 +94,8 @@ class Unlocker {
                 html+='<div id="ul-modal" class="ul-d-none">';
                 html+='<div id="ul-modal-overlay">';
                 html+='<div id="ul-modal-content">';
+                html+='<div id="ul-modal-logo"></div>';
+                html+='<div id="ul-modal-close">&times;</div>';
                 html+='</div></div></div>';
             }
             b.innerHTML=html;
@@ -124,8 +127,10 @@ class Unlocker {
         const container=document.querySelector('#ul-modal');
         const overlay=document.querySelector('#ul-modal-overlay');
         const modal=document.querySelector('#ul-modal-content');
+        const x=document.querySelector('#ul-modal-close');
         link.addEventListener('click', self.openModal.bind(null, container));
         overlay.addEventListener('click', self.closeModal.bind(null, container));
+        x.addEventListener('click', self.closeModal.bind(null, container));
         modal.addEventListener('click', e=>e.stopPropagation());
     }
 
