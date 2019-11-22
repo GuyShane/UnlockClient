@@ -25,16 +25,18 @@ $delay-three: $duration*0.67;
 
 #unlock-button {
     display: inline-block;
-    #_unlock-button {
+    color: white;
+    font-family: sans-serif;
+    #ul-button {
         position: relative;
         background-color: transparent;
         padding: 7px 17px;
         border-radius: 8px;
-        #_unlock-logo {
+        #ul-logo {
             width: 77px;
             height: 18px;
         }
-        #_unlock-cover {
+        #ul-cover {
             position: absolute;
             left: 0;
             top: 0;
@@ -44,7 +46,7 @@ $delay-three: $duration*0.67;
             border-radius: 8px;
             transition: opacity 0.2s;
         }
-        #_unlock-spinner {
+        #ul-spinner {
             width: $dot-size;
             height: $dot-size;
             position: absolute;
@@ -52,7 +54,7 @@ $delay-three: $duration*0.67;
             top: 50%;
             transform: translate(-50%, -50%);
             transition: opacity 0.2s;
-            .unlock-dot {
+            .ul-dot {
                 width: $dot-size;
                 height: $dot-size;
                 border-radius: 50%;
@@ -60,43 +62,73 @@ $delay-three: $duration*0.67;
                 position: absolute;
                 left: 0px;
             }
-            #_unlock-dot-one {
+            #ul-dot-one {
                 animation: move $duration ease-in-out 0s infinite normal;
             }
-            #_unlock-dot-two {
+            #ul-dot-two {
                 animation: move $duration ease-in-out $delay-two infinite normal;
                 animation-fill-mode: backwards;
             }
-            #_unlock-dot-three {
+            #ul-dot-three {
                 animation: move $duration ease-in-out $delay-three infinite normal;
                 animation-fill-mode: backwards;
             }
         }
-        &.unlock-enabled {
-            #_unlock-cover {
+        &.ul-enabled {
+            #ul-cover {
                 opacity: 0;
             }
-            #_unlock-spinner {
+            #ul-spinner {
                 opacity: 0;
             }
         }
-        &.unlock-disabled {
-            #_unlock-cover {
+        &.ul-disabled {
+            #ul-cover {
                 opacity: 1;
             }
-            #_unlock-spinner {
+            #ul-spinner {
                 opacity: 1;
             }
         }
     }
-    #_unlock-link {
+    #ul-link {
         text-align: center;
         color: transparent;
-        a {
-            text-decoration: none;
-        }
-        a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        margin-top: 0.2rem;
+        &:hover {
             text-decoration: underline;
         }
+    }
+    #ul-modal {
+        opacity: 0;
+        transition: opacity 0.2s;
+        &.ul-open {
+            opacity: 1;
+        }
+        #ul-modal-overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        #ul-modal-content {
+            position: absolute;
+            left: 50%;
+            top: 4rem;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
+            width: 85%;
+            max-width: 500px;
+            height: 30rem;
+        }
+    }
+    .ul-d-none {
+        display: none;
     }
 }

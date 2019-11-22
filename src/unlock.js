@@ -61,39 +61,44 @@ class Unlocker {
 
     enableButton(){
         const b=document.querySelector('#unlock-button')
-              .querySelector('#_unlock-button');
+              .querySelector('#ul-button');
         b.removeEventListener('click', this.unlock);
         b.addEventListener('click', this.unlock);
-        b.classList.remove('unlock-disabled');
-        b.classList.add('unlock-enabled');
+        b.classList.remove('ul-disabled');
+        b.classList.add('ul-enabled');
     }
 
     disableButton(){
         const b=document.querySelector('#unlock-button')
-              .querySelector('#_unlock-button');
+              .querySelector('#ul-button');
         b.removeEventListener('click', this.unlock);
-        b.classList.remove('unlock-enabled');
-        b.classList.add('unlock-disabled');
+        b.classList.remove('ul-enabled');
+        b.classList.add('ul-disabled');
     }
 
     buildButton(){
-        var b=document.querySelector('#unlock-button');
-        if (b.querySelector('#_unlock-button')){
-            var clone=b.cloneNode(true);
+        const b=document.querySelector('#unlock-button');
+        if (b.querySelector('#ul-button')){
+            const clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
         }
         else {
-            var html='<div id="_unlock-button" class="unlock-enabled">'+
-                '<img id="_unlock-logo" src="https://www.unlock-app.com/images/unlock-logo-text.svg">'+
-                '<span id="_unlock-cover"></span><div id="_unlock-spinner"><div id="_unlock-dot-one" class="unlock-dot">'+
-                '</div><div id="_unlock-dot-two" class="unlock-dot"></div><div id="_unlock-dot-three" class="unlock-dot">'+
+            let html='<div id="ul-button" class="ul-enabled">'+
+                '<img id="ul-logo" src="https://www.unlock-app.com/images/unlock-logo-text.svg" alt="unlock">'+
+                '<span id="ul-cover"></span><div id="ul-spinner"><div id="ul-dot-one" class="ul-dot">'+
+                '</div><div id="ul-dot-two" class="ul-dot"></div><div id="ul-dot-three" class="ul-dot">'+
                 '</div></div></div>';
             if (this.opts.whatsThis){
-                html+='<div id="_unlock-link"><a href="https://www.unlock-app.com" target="_blank">What\'s this?</a></div>';
+                html+='<div id="ul-link">What\'s this?</div>';
+                html+='<div id="ul-modal" class="ul-d-none">';
+                html+='<div id="ul-modal-overlay">';
+                html+='<div id="ul-modal-content">';
+                html+='</div></div></div>';
             }
             b.innerHTML=html;
         }
         this.addColor();
+        this.setupModal();
         this.enableButton();
     }
 
@@ -102,13 +107,39 @@ class Unlocker {
         const light=alter(bg, true);
         const dark=alter(bg, false);
         const styles=[
-            `#unlock-button #_unlock-button {background-color: ${bg}}`,
-            `#unlock-button #_unlock-button.unlock-enabled:hover {background-color: ${light}}`,
-            `#unlock-button #_unlock-button.unlock-enabled:active {background-color: ${dark}}`,
+            `#unlock-button #ul-button {background-color: ${bg}}`,
+            `#unlock-button #ul-button.ul-enabled:hover {background-color: ${light}}`,
+            `#unlock-button #ul-button.ul-enabled:active {background-color: ${dark}}`,
         ];
         if (this.opts.whatsThis){
-            styles.push(`#unlock-button #_unlock-link a {color: ${bg}}`);
+            styles.push(`#unlock-button #ul-link {color: ${bg}}`);
         }
         insertRules(styles);
+    }
+
+    setupModal(){
+        if (!this.opts.whatsThis){return;}
+        const self=this;
+        const link=document.querySelector('#ul-link');
+        const container=document.querySelector('#ul-modal');
+        const overlay=document.querySelector('#ul-modal-overlay');
+        const modal=document.querySelector('#ul-modal-content');
+        link.addEventListener('click', self.openModal.bind(null, container));
+        overlay.addEventListener('click', self.closeModal.bind(null, container));
+        modal.addEventListener('click', e=>e.stopPropagation());
+    }
+
+    openModal(container){
+        container.classList.remove('ul-d-none');
+        window.setTimeout(()=>{
+            container.classList.add('ul-open');
+        });
+    }
+
+    closeModal(container){
+        container.classList.remove('ul-open');
+        window.setTimeout(()=>{
+            container.classList.add('ul-d-none');
+        }, 200);
     }
 }

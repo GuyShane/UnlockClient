@@ -7,5 +7,15 @@
     <input type="email" id="email"/>
     <div id="unlock-button"></div>
     <script src="../dist/unlock.js"></script>
+    <script>
+      Unlock.init({
+          url: 'ws://localhost:3456',
+          email: '#email',
+          onMessage: function(msg){
+              console.log(msg);
+          },
+          whatsThis: true
+      });
+    </script>
   </body>
 </html>

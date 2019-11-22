@@ -2,13 +2,14 @@ class Socket {
     constructor(url, onMessage){
         this.url=url;
         this.onMessage=onMessage;
+
         this.open=false;
         this.actions=[];
         this.socket=new WebSocket(this.url);
 
         this.socket.onopen=this.onOpen.bind(this);
         this.socket.onclose=this.onClose.bind(this);
-        this.socket.onmessage=this.onMessage.bind(this);
+        this.socket.onmessage=this._onMessage.bind(this);
     }
 
     onOpen(){
@@ -24,7 +25,7 @@ class Socket {
         this.open=false;
     }
 
-    onMessage(evt){
+    _onMessage(evt){
         let data;
         try {
             data=JSON.parse(evt.data);
