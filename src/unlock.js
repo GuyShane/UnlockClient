@@ -12,6 +12,7 @@ export function init(opts){
 }
 
 const url='https://unlock-app.com/';
+const $=id=>document.querySelector(id);
 
 class Unlocker {
     constructor(opts){
@@ -63,7 +64,7 @@ class Unlocker {
     }
 
     enableButton(){
-        const b=document.querySelector('#unlock-button')
+        const b=$('#unlock-button')
               .querySelector('#ul-button');
         offClick(b, this.unlock);
         onClick(b, this.unlock);
@@ -72,7 +73,7 @@ class Unlocker {
     }
 
     disableButton(){
-        const b=document.querySelector('#unlock-button')
+        const b=$('#unlock-button')
               .querySelector('#ul-button');
         offClick(b, this.unlock);
         b.classList.remove('ul-enabled');
@@ -80,7 +81,7 @@ class Unlocker {
     }
 
     buildButton(){
-        const b=document.querySelector('#unlock-button');
+        const b=$('#unlock-button');
         if (b.querySelector('#ul-button')){
             const clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
@@ -113,6 +114,7 @@ class Unlocker {
                     '<div id="ul-modal-picture-buttons">'+
                     '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
                     ' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>'+
+                    '<input id="ul-modal-picture-input" type="file" accept="image/*">'+
                     '</div><div id="ul-modal-picture-text">a picture of yourself*</div></div>'+
                     '<div id="ul-modal-picture-description">'+
                     '<div>*Make sure you use a picture that clearly shows your face, '+
@@ -147,12 +149,14 @@ class Unlocker {
 
     setupModal(){
         if (!this.opts.whatsThis){return;}
-        const link=document.querySelector('#ul-link');
-        const container=document.querySelector('#ul-modal');
-        const overlay=document.querySelector('#ul-modal-overlay');
-        const modal=document.querySelector('#ul-modal-content');
-        const x=document.querySelector('#ul-modal-close');
-        const signup=document.querySelector('#ul-modal-signup');
+        const link=$('#ul-link');
+        const container=$('#ul-modal');
+        const overlay=$('#ul-modal-overlay');
+        const modal=$('#ul-modal-content');
+        const x=$('#ul-modal-close');
+        const upload=$('#ul-modal-picture-upload');
+        const file=$('#ul-modal-picture-input');
+        const signup=$('#ul-modal-signup');
 
         const open=this.openModal.bind(null, container);
         const close=this.closeModal.bind(null, container);
@@ -162,6 +166,7 @@ class Unlocker {
         onClick(x, close);
         onClick(modal, e=>e.stopPropagation());
 
+        onClick(upload, ()=>file.click());
         onClick(signup, this.signup);
     }
 

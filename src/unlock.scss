@@ -213,6 +213,9 @@ $delay-three: $duration*0.67;
                     font-size: 18px;
                     #ul-modal-picture-buttons {
                         margin-bottom: 3px;
+                        #ul-modal-picture-input {
+                            display: none;
+                        }
                     }
                 }
                 #ul-modal-picture-description {
