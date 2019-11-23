@@ -93,10 +93,27 @@ class Unlocker {
                 html+='<div id="ul-link">What\'s this?</div>';
                 html+='<div id="ul-modal" class="ul-d-none">';
                 html+='<div id="ul-modal-overlay">';
-                html+='<div id="ul-modal-content">';
+                html+='<div id="ul-modal-container">';
                 html+='<div id="ul-modal-logo"></div>';
                 html+='<div id="ul-modal-close">&times;</div>';
-                html+='</div></div></div>';
+                html+='<div id="ul-modal-content">';
+                html+='<div id="ul-modal-title">Sign up for Unlock</div>';
+                html+='<div id="ul-modal-description">';
+                html+='Unlock allows you to sign up and log in ';
+                html+='to web based applications without ever needing ';
+                html+='a password. You need to create an Unlock account ';
+                html+='once, and then you can use it on any participating ';
+                html+='site or app. Learn more at ';
+                html+='<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>';
+                html+='<div id="ul-modal-email">';
+                html+='<div id="ul-modal-email-label">Email</div>';
+                html+='<input id="ul-modal-email-input" type="email" autocomplete="email"></div>';
+                html+='<div id="ul-modal-picture">';
+                html+='<div id="ul-modal-picture-buttons">';
+                html+='<button id="ul-modal-picture-take" class="ul-button">Take</button>';
+                html+=' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>';
+                html+='</div><div id="ul-modal-picture-text">a picture of yourself</div></div>';
+                html+='</div></div></div></div>';
             }
             b.innerHTML=html;
         }
