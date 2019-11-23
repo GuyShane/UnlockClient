@@ -90,36 +90,36 @@ class Unlocker {
                 '</div><div id="ul-dot-two" class="ul-dot"></div><div id="ul-dot-three" class="ul-dot">'+
                 '</div></div></div>';
             if (this.opts.whatsThis){
-                html+='<div id="ul-link">What\'s this?</div>';
-                html+='<div id="ul-modal" class="ul-d-none">';
-                html+='<div id="ul-modal-overlay">';
-                html+='<div id="ul-modal-container">';
-                html+='<div id="ul-modal-logo-container">';
-                html+='<img id="ul-modal-logo" src="https://unlock-app.com/images/unlock-icon.svg"></div>';
-                html+='<div id="ul-modal-close">&times;</div>';
-                html+='<div id="ul-modal-content">';
-                html+='<div id="ul-modal-title">Sign up for Unlock</div>';
-                html+='<div id="ul-modal-description">';
-                html+='Unlock allows you to sign up and log in ';
-                html+='to web based applications without ever needing ';
-                html+='a password. You need to create an Unlock account ';
-                html+='once, and then you can use it on any participating ';
-                html+='site or app. Learn more at ';
-                html+='<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>';
-                html+='<input id="ul-modal-email" type="email" placeholder="Enter your email address">';
-                html+='<div id="ul-modal-picture">';
-                html+='<div id="ul-modal-picture-buttons">';
-                html+='<button id="ul-modal-picture-take" class="ul-button">Take</button>';
-                html+=' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>';
-                html+='</div><div id="ul-modal-picture-text">a picture of yourself*</div></div>';
-                html+='<div id="ul-modal-picture-description">';
-                html+='<div>*Make sure you use a picture that clearly shows your face, ';
-                html+='and only contains you in it.</div>';
-                html+='<div>Your picture is never stored or shared with anyone. ';
-                html+='It is converted into a number and then encrypted. The number is only ';
-                html+='used when you log in to the Unlock website.</div></div>';
-                html+='<button id="ul-modal-signup">Sign up</button>';
-                html+='</div></div></div></div>';
+                html+='<div id="ul-link">What\'s this?</div>'+
+                    '<div id="ul-modal" class="ul-d-none">'+
+                    '<div id="ul-modal-overlay">'+
+                    '<div id="ul-modal-container">'+
+                    '<div id="ul-modal-logo-container">'+
+                    '<img id="ul-modal-logo" src="https://unlock-app.com/images/unlock-icon.svg"></div>'+
+                    '<div id="ul-modal-close">&times+</div>'+
+                    '<div id="ul-modal-content">'+
+                    '<div id="ul-modal-title">Sign up for Unlock</div>'+
+                    '<div id="ul-modal-description">'+
+                    'Unlock allows you to sign up and log in '+
+                    'to web based applications without ever needing '+
+                    'a password. You need to create an Unlock account '+
+                    'once, and then you can use it on any participating '+
+                    'site or app. Learn more at '+
+                    '<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>'+
+                    '<input id="ul-modal-email" type="email" placeholder="Enter your email address">'+
+                    '<div id="ul-modal-picture">'+
+                    '<div id="ul-modal-picture-buttons">'+
+                    '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
+                    ' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>'+
+                    '</div><div id="ul-modal-picture-text">a picture of yourself*</div></div>'+
+                    '<div id="ul-modal-picture-description">'+
+                    '<div>*Make sure you use a picture that clearly shows your face, '+
+                    'and only contains you in it.</div>'+
+                    '<div>Your picture is never stored or shared with anyone. '+
+                    'It is converted into a number and then encrypted. The number is only '+
+                    'used when you log in to the Unlock website.</div></div>'+
+                    '<button id="ul-modal-signup">Sign up</button>'+
+                    '</div></div></div></div>';
             }
             b.innerHTML=html;
         }
