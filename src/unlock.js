@@ -96,7 +96,7 @@ class Unlocker {
                     '<div id="ul-modal-container">'+
                     '<div id="ul-modal-logo-container">'+
                     '<img id="ul-modal-logo" src="https://unlock-app.com/images/unlock-icon.svg"></div>'+
-                    '<div id="ul-modal-close">&times+</div>'+
+                    '<div id="ul-modal-close">&times;</div>'+
                     '<div id="ul-modal-content">'+
                     '<div id="ul-modal-title">Sign up for Unlock</div>'+
                     '<div id="ul-modal-description">'+
