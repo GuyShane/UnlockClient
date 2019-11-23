@@ -20,7 +20,15 @@ function insertRules(rules){
     });
 }
 
-function addOnEnter(id, action){
+function onClick(elem, action){
+    elem.addEventListener('click', action);
+}
+
+function offClick(elem, action){
+    elem.removeEventListener('click', action);
+}
+
+function onEnter(id, action){
     const elem=document.querySelector(id);
     elem.onkeyup=e=>{
         const key=e.which||e.keyCode;
@@ -34,5 +42,7 @@ export {
     find,
     val,
     insertRules,
-    addOnEnter
+    onClick,
+    offClick,
+    onEnter
 };

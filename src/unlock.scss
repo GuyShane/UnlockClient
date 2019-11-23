@@ -110,7 +110,7 @@ $delay-three: $duration*0.67;
             opacity: 1;
         }
         #ul-modal-overlay {
-            position: absolute;
+            position: fixed;
             left: 0;
             top: 0;
             @include size(100%);
@@ -126,6 +126,7 @@ $delay-three: $duration*0.67;
             box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
             width: 85%;
             max-width: 450px;
+            margin-bottom: 20px;
             #ul-modal-logo-container {
                 position: relative;
                 display: inline-block;

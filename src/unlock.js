@@ -1,7 +1,7 @@
 import Socket from './socket';
 
 import {makeSchema, enforce} from './enforcer';
-import {find, val, insertRules, addOnEnter} from './dom';
+import {find, val, insertRules, onClick, offClick, onEnter} from './dom';
 import {normalize, alter} from './color';
 import {isEmpty} from './utils';
 
@@ -10,6 +10,8 @@ import './unlock.scss';
 export function init(opts){
     const unlocker=new Unlocker(opts);
 }
+
+const url='https://unlock-app.com/';
 
 class Unlocker {
     constructor(opts){
@@ -39,7 +41,7 @@ class Unlocker {
 
         self.buildButton();
         if (self.opts.submitOnEnter){
-            addOnEnter(self.opts.email, self.unlock);
+            onEnter(self.opts.email, self.unlock);
         }
     }
 
@@ -63,8 +65,8 @@ class Unlocker {
     enableButton(){
         const b=document.querySelector('#unlock-button')
               .querySelector('#ul-button');
-        b.removeEventListener('click', this.unlock);
-        b.addEventListener('click', this.unlock);
+        offClick(b, this.unlock);
+        onClick(b, this.unlock);
         b.classList.remove('ul-disabled');
         b.classList.add('ul-enabled');
     }
@@ -72,7 +74,7 @@ class Unlocker {
     disableButton(){
         const b=document.querySelector('#unlock-button')
               .querySelector('#ul-button');
-        b.removeEventListener('click', this.unlock);
+        offClick(b, this.unlock);
         b.classList.remove('ul-enabled');
         b.classList.add('ul-disabled');
     }
@@ -85,17 +87,17 @@ class Unlocker {
         }
         else {
             let html='<div id="ul-button" class="ul-enabled">'+
-                '<img id="ul-logo" src="https://unlock-app.com/images/unlock-logo-text.svg" alt="unlock">'+
+                '<img id="ul-logo" src="'+url+'images/unlock-logo-text.svg" alt="unlock">'+
                 '<span id="ul-cover"></span><div id="ul-spinner"><div id="ul-dot-one" class="ul-dot">'+
                 '</div><div id="ul-dot-two" class="ul-dot"></div><div id="ul-dot-three" class="ul-dot">'+
                 '</div></div></div>';
             if (this.opts.whatsThis){
                 html+='<div id="ul-link">What\'s this?</div>'+
                     '<div id="ul-modal" class="ul-d-none">'+
-                    '<div id="ul-modal-overlay">'+
+                    '<div id="ul-modal-overlay"></div>'+
                     '<div id="ul-modal-container">'+
                     '<div id="ul-modal-logo-container">'+
-                    '<img id="ul-modal-logo" src="https://unlock-app.com/images/unlock-icon.svg"></div>'+
+                    '<img id="ul-modal-logo" src="'+url+'images/unlock-icon.svg"></div>'+
                     '<div id="ul-modal-close">&times;</div>'+
                     '<div id="ul-modal-content">'+
                     '<div id="ul-modal-title">Sign up for Unlock</div>'+
@@ -119,7 +121,7 @@ class Unlocker {
                     'It is converted into a number and then encrypted. The number is only '+
                     'used when you log in to the Unlock website.</div></div>'+
                     '<button id="ul-modal-signup">Sign up</button>'+
-                    '</div></div></div></div>';
+                    '</div></div></div>';
             }
             b.innerHTML=html;
         }
@@ -145,16 +147,22 @@ class Unlocker {
 
     setupModal(){
         if (!this.opts.whatsThis){return;}
-        const self=this;
         const link=document.querySelector('#ul-link');
         const container=document.querySelector('#ul-modal');
         const overlay=document.querySelector('#ul-modal-overlay');
         const modal=document.querySelector('#ul-modal-content');
         const x=document.querySelector('#ul-modal-close');
-        link.addEventListener('click', self.openModal.bind(null, container));
-        overlay.addEventListener('click', self.closeModal.bind(null, container));
-        x.addEventListener('click', self.closeModal.bind(null, container));
-        modal.addEventListener('click', e=>e.stopPropagation());
+        const signup=document.querySelector('#ul-modal-signup');
+
+        const open=this.openModal.bind(null, container);
+        const close=this.closeModal.bind(null, container);
+
+        onClick(link, open);
+        onClick(overlay, close);
+        onClick(x, close);
+        onClick(modal, e=>e.stopPropagation());
+
+        onClick(signup, this.signup);
     }
 
     openModal(container){
@@ -169,5 +177,15 @@ class Unlocker {
         window.setTimeout(()=>{
             container.classList.add('ul-d-none');
         }, 200);
+    }
+
+    signup(){
+        const email=val('#ul-modal-email');
+        const picture='';
+        fetch(url+'api/signup', {
+            method: 'POST',
+            headers: {'content-type': 'text/plain'},
+            body: JSON.stringify({email, picture})
+        });
     }
 }
