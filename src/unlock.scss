@@ -4,6 +4,11 @@ $duration: 1.2s;
 $delay-two: $duration*0.33;
 $delay-three: $duration*0.67;
 
+@mixin size($size) {
+    width: $size;
+    height: $size;
+}
+
 @keyframes move {
     0% {
         transform: scale(0);
@@ -40,23 +45,20 @@ $delay-three: $duration*0.67;
             position: absolute;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
+            @include size(100%);
             background-color: rgba(76, 76, 76, 0.6);
             border-radius: 8px;
             transition: opacity 0.2s;
         }
         #ul-spinner {
-            width: $dot-size;
-            height: $dot-size;
+            @include size($dot-size);
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             transition: opacity 0.2s;
             .ul-dot {
-                width: $dot-size;
-                height: $dot-size;
+                @include size($dot-size);
                 border-radius: 50%;
                 background-color: #fff;
                 position: absolute;
@@ -111,8 +113,7 @@ $delay-three: $duration*0.67;
             position: absolute;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
+            @include size(100%);
             background: rgba(0, 0, 0, 0.4);
         }
         #ul-modal-container {
@@ -125,18 +126,24 @@ $delay-three: $duration*0.67;
             box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
             width: 85%;
             max-width: 450px;
-            #ul-modal-logo {
+            #ul-modal-logo-container {
                 position: relative;
                 display: inline-block;
                 left: 50%;
                 top: 0;
                 transform: translate(-50%, -45%);
-                $size: 100px;
-                width: $size;
-                height: $size;
+                @include size(100px);
                 border-radius: 50%;
                 background: #2f81c6;
                 box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+                #ul-modal-logo {
+                    position: relative;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 54px;
+                    height: 86px;
+                }
             }
             #ul-modal-close {
                 position: absolute;
@@ -156,34 +163,78 @@ $delay-three: $duration*0.67;
                     color: #aaa;
                     text-decoration: underline;
                 }
+                button {
+                    padding: 5px 15px;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    outline: none;
+                    border: none;
+                    border-radius: 5px;
+                    background: linear-gradient(#2f81c6, #1d90f1);
+                    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+                    &:hover {
+                        background: linear-gradient(
+                            lighten(#2f81c6, 8%),
+                            lighten(#1d90f1, 8%)
+                        );
+                    }
+                    &:active {
+                        background: linear-gradient(
+                            darken(#2f81c6, 8%),
+                            darken(#1d90f1, 8%)
+                        );
+                    }
+                }
                 #ul-modal-title {
                     font-size: 30px;
                     color: #444;
                     margin-bottom: 15px;
                 }
                 #ul-modal-email {
-                    margin: 15px 0;
-                    text-align: left;
-                    #ul-modal-email-label {
-                        color:#444;
-                        margin-left: 5px;
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    border-bottom: 1px solid #444;
+                    padding: 2px 0;
+                    margin: 15px 5px 20px;
+                    font-size: 20px;
+                    &::placeholder {
+                        font-size: 17px;
                     }
-                    #ul-modal-email-input {
-                        width: 100%;
-                        border: none;
-                        outline: none;
-                        border-bottom: 1px solid #444;
-                        padding: 2px 0;
-                        margin: 0 5px;
-                        font-size: 20px;
-                        &:focus {
-                            border-bottom: 1px solid #2f81c6;
-                        }
+                    &:focus {
+                        border-bottom: 1px solid #2f81c6;
                     }
                 }
                 #ul-modal-picture {
                     color: #444;
                     font-size: 18px;
+                    #ul-modal-picture-buttons {
+                        margin-bottom: 3px;
+                    }
+                }
+                #ul-modal-picture-description {
+                    margin-top: 10px;
+                    div {
+                        margin-top: 5px;
+                    }
+                }
+                #ul-modal-signup {
+                    margin-top: 15px;
+                    background: linear-gradient(#3abd67, #45de79);
+                    &:hover {
+                        background: linear-gradient(
+                            lighten(#3abd67, 8%),
+                            lighten(#45de79, 8%)
+                        );
+                    }
+                    &:active {
+                        background: linear-gradient(
+                            darken(#3abd67, 8%),
+                            darken(#45de79, 8%)
+                        );
+                    }
                 }
             }
         }
