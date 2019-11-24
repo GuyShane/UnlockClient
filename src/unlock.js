@@ -110,12 +110,7 @@ class Unlocker {
                     'site or app. Learn more at '+
                     '<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>'+
                     '<input id="ul-modal-email" type="email" placeholder="Enter your email address">'+
-                    '<div id="ul-modal-picture">'+
-                    '<div id="ul-modal-picture-buttons">'+
-                    '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
-                    ' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>'+
-                    '<input id="ul-modal-picture-input" type="file" accept="image/*">'+
-                    '</div><div id="ul-modal-picture-text">a picture of yourself*</div></div>'+
+                    '<div id="ul-modal-picture"></div>'+
                     '<div id="ul-modal-picture-description">'+
                     '<div>*Make sure you use a picture that clearly shows your face, '+
                     'and only contains you in it.</div>'+
@@ -149,13 +144,14 @@ class Unlocker {
 
     setupModal(){
         if (!this.opts.whatsThis){return;}
+
+        this.makePictureActions();
+
         const link=dom.$('#ul-link');
         const container=dom.$('#ul-modal');
         const overlay=dom.$('#ul-modal-overlay');
         const modal=dom.$('#ul-modal-content');
         const x=dom.$('#ul-modal-close');
-        const upload=dom.$('#ul-modal-picture-upload');
-        const input=dom.$('#ul-modal-picture-input');
         const signup=dom.$('#ul-modal-signup');
 
         const open=this.openModal.bind(null, container);
@@ -166,10 +162,7 @@ class Unlocker {
         dom.onClick(x, close);
         dom.onClick(modal, e=>e.stopPropagation());
 
-        dom.onClick(upload, ()=>input.click());
         dom.onClick(signup, this.signup.bind(this));
-
-        input.addEventListener('change', this.handleInput.bind(this));
     }
 
     openModal(container){
@@ -195,13 +188,31 @@ class Unlocker {
         self.reader.readAsDataURL(evt.target.files[0]);
     }
 
+    makePictureActions(transition){
+        this.image='';
+        const html='<div id="ul-modal-picture-buttons">'+
+              '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
+              ' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>'+
+              '<input id="ul-modal-picture-input" type="file" accept="image/*">'+
+              '</div><div id="ul-modal-picture-text">a picture of yourself*</div>';
+        const pic=dom.$('#ul-modal-picture');
+        dom.transition(pic, html, ()=>{
+            const upload=dom.$('#ul-modal-picture-upload');
+            const input=dom.$('#ul-modal-picture-input');
+            dom.onClick(upload, ()=>input.click());
+            input.addEventListener('change', this.handleInput.bind(this));
+        });
+    }
+
     makePreview(src){
         this.image=src;
         const html='<div id="ul-modal-preview">'+
               '<img id="ul-modal-preview-picture" src="'+src+'">'+
               '<div id="ul-modal-preview-close">&times;</div></div>';
         const pic=dom.$('#ul-modal-picture');
-        dom.transition(pic, dom.make(html));
+        dom.transition(pic, html, ()=>{
+            dom.onClick(dom.$('#ul-modal-preview-close'), this.makePictureActions.bind(this, true));
+        });
     }
 
     signup(){

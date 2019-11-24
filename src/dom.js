@@ -6,12 +6,6 @@ function $(id){
     return elem;
 }
 
-function make(s){
-    const div=document.createElement('div');
-    div.innerHTML=s;
-    return div.firstChild;
-}
-
 function val(id){
     return document.querySelector(id).value;
 }
@@ -22,16 +16,17 @@ function empty(elem){
     }
 }
 
-function transition(container, content, transition){
-    const delay=transition?200:0;
+function transition(container, html, after){
+    const delay=200;
     container.classList.add('ul-invisible');
     setTimeout(()=>{
         empty(container);
-        container.appendChild(content);
+        container.innerHTML=html;
         container.classList.remove('ul-invisible');
         container.classList.add('ul-visible');
         setTimeout(()=>{
             container.classList.remove('ul-visible');
+            after();
         }, delay);
     }, delay);
 }
@@ -66,7 +61,6 @@ function onEnter(id, action){
 
 export {
     $,
-    make,
     val,
     empty,
     transition,
