@@ -1,9 +1,15 @@
-function find(id){
+function $(id){
     const elem=document.querySelector(id);
     if (!elem){
         throw new Error('No element found with id '+id);
     }
     return elem;
+}
+
+function make(s){
+    const div=document.createElement('div');
+    div.innerHTML=s;
+    return div.firstChild;
 }
 
 function val(id){
@@ -14,6 +20,20 @@ function empty(elem){
     while(elem.firstChild){
         elem.removeChild(elem.firstChild);
     }
+}
+
+function transition(container, content, transition){
+    const delay=transition?200:0;
+    container.classList.add('ul-invisible');
+    setTimeout(()=>{
+        empty(container);
+        container.appendChild(content);
+        container.classList.remove('ul-invisible');
+        container.classList.add('ul-visible');
+        setTimeout(()=>{
+            container.classList.remove('ul-visible');
+        }, delay);
+    }, delay);
 }
 
 function insertRules(rules){
@@ -45,9 +65,11 @@ function onEnter(id, action){
 }
 
 export {
-    find,
+    $,
+    make,
     val,
     empty,
+    transition,
     insertRules,
     onClick,
     offClick,

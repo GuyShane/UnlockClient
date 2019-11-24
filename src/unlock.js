@@ -13,7 +13,6 @@ export function init(opts){
 }
 
 const url='https://unlock-app.com/';
-const $=id=>document.querySelector(id);
 
 class Unlocker {
     constructor(opts){
@@ -30,8 +29,8 @@ class Unlocker {
         };
 
         self.opts=enforce(opts, schema);
-        dom.find(self.opts.email);
-        dom.find('#unlock-button');
+        dom.$(self.opts.email);
+        dom.$('#unlock-button');
         self.opts.color=normalize(self.opts.color);
 
         self.socket=new Socket(self.opts.url, data=>{
@@ -65,7 +64,7 @@ class Unlocker {
     }
 
     enableButton(){
-        const b=$('#unlock-button')
+        const b=dom.$('#unlock-button')
               .querySelector('#ul-button');
         dom.offClick(b, this.unlock);
         dom.onClick(b, this.unlock);
@@ -74,7 +73,7 @@ class Unlocker {
     }
 
     disableButton(){
-        const b=$('#unlock-button')
+        const b=dom.$('#unlock-button')
               .querySelector('#ul-button');
         dom.offClick(b, this.unlock);
         b.classList.remove('ul-enabled');
@@ -82,7 +81,7 @@ class Unlocker {
     }
 
     buildButton(){
-        const b=$('#unlock-button');
+        const b=dom.$('#unlock-button');
         if (b.querySelector('#ul-button')){
             const clone=b.cloneNode(true);
             b.parentNode.replaceChild(clone, b);
@@ -150,14 +149,14 @@ class Unlocker {
 
     setupModal(){
         if (!this.opts.whatsThis){return;}
-        const link=$('#ul-link');
-        const container=$('#ul-modal');
-        const overlay=$('#ul-modal-overlay');
-        const modal=$('#ul-modal-content');
-        const x=$('#ul-modal-close');
-        const upload=$('#ul-modal-picture-upload');
-        const input=$('#ul-modal-picture-input');
-        const signup=$('#ul-modal-signup');
+        const link=dom.$('#ul-link');
+        const container=dom.$('#ul-modal');
+        const overlay=dom.$('#ul-modal-overlay');
+        const modal=dom.$('#ul-modal-content');
+        const x=dom.$('#ul-modal-close');
+        const upload=dom.$('#ul-modal-picture-upload');
+        const input=dom.$('#ul-modal-picture-input');
+        const signup=dom.$('#ul-modal-signup');
 
         const open=this.openModal.bind(null, container);
         const close=this.closeModal.bind(null, container);
@@ -198,12 +197,11 @@ class Unlocker {
 
     makePreview(src){
         this.image=src;
-        const img=document.createElement('img');
-        img.id='ul-modal-picture-preview';
-        img.src=src;
-        const pic=$('#ul-modal-picture');
-        dom.empty(pic);
-        pic.appendChild(img);
+        const html='<div id="ul-modal-preview">'+
+              '<img id="ul-modal-preview-picture" src="'+src+'">'+
+              '<div id="ul-modal-preview-close">&times;</div></div>';
+        const pic=dom.$('#ul-modal-picture');
+        dom.transition(pic, dom.make(html));
     }
 
     signup(){
