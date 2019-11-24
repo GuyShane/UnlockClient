@@ -1,7 +1,8 @@
 import Socket from './socket';
 
+import * as dom from './dom';
+
 import {makeSchema, enforce} from './enforcer';
-import {find, val, empty, insertRules, onClick, offClick, onEnter} from './dom';
 import {normalize, alter} from './color';
 import {isEmpty} from './utils';
 
@@ -29,8 +30,8 @@ class Unlocker {
         };
 
         self.opts=enforce(opts, schema);
-        find(self.opts.email);
-        find('#unlock-button');
+        dom.find(self.opts.email);
+        dom.find('#unlock-button');
         self.opts.color=normalize(self.opts.color);
 
         self.socket=new Socket(self.opts.url, data=>{
@@ -42,12 +43,12 @@ class Unlocker {
 
         self.buildButton();
         if (self.opts.submitOnEnter){
-            onEnter(self.opts.email, self.unlock);
+            dom.onEnter(self.opts.email, self.unlock);
         }
     }
 
     get email(){
-        return val(this.opts.email);
+        return dom.val(this.opts.email);
     }
 
     _unlock(){
@@ -66,8 +67,8 @@ class Unlocker {
     enableButton(){
         const b=$('#unlock-button')
               .querySelector('#ul-button');
-        offClick(b, this.unlock);
-        onClick(b, this.unlock);
+        dom.offClick(b, this.unlock);
+        dom.onClick(b, this.unlock);
         b.classList.remove('ul-disabled');
         b.classList.add('ul-enabled');
     }
@@ -75,7 +76,7 @@ class Unlocker {
     disableButton(){
         const b=$('#unlock-button')
               .querySelector('#ul-button');
-        offClick(b, this.unlock);
+        dom.offClick(b, this.unlock);
         b.classList.remove('ul-enabled');
         b.classList.add('ul-disabled');
     }
@@ -144,7 +145,7 @@ class Unlocker {
         if (this.opts.whatsThis){
             styles.push(`#unlock-button #ul-link {color: ${bg}}`);
         }
-        insertRules(styles);
+        dom.insertRules(styles);
     }
 
     setupModal(){
@@ -161,13 +162,13 @@ class Unlocker {
         const open=this.openModal.bind(null, container);
         const close=this.closeModal.bind(null, container);
 
-        onClick(link, open);
-        onClick(overlay, close);
-        onClick(x, close);
-        onClick(modal, e=>e.stopPropagation());
+        dom.onClick(link, open);
+        dom.onClick(overlay, close);
+        dom.onClick(x, close);
+        dom.onClick(modal, e=>e.stopPropagation());
 
-        onClick(upload, ()=>input.click());
-        onClick(signup, this.signup.bind(this));
+        dom.onClick(upload, ()=>input.click());
+        dom.onClick(signup, this.signup.bind(this));
 
         input.addEventListener('change', this.handleInput.bind(this));
     }
@@ -201,12 +202,12 @@ class Unlocker {
         img.id='ul-modal-picture-preview';
         img.src=src;
         const pic=$('#ul-modal-picture');
-        empty(pic);
+        dom.empty(pic);
         pic.appendChild(img);
     }
 
     signup(){
-        const email=val('#ul-modal-email');
+        const email=dom.val('#ul-modal-email');
         fetch(url+'api/signup', {
             method: 'POST',
             headers: {'content-type': 'text/plain'},
