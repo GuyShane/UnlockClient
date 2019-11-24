@@ -1,7 +1,7 @@
 import Socket from './socket';
 
 import {makeSchema, enforce} from './enforcer';
-import {find, val, insertRules, onClick, offClick, onEnter} from './dom';
+import {find, val, empty, insertRules, onClick, offClick, onEnter} from './dom';
 import {normalize, alter} from './color';
 import {isEmpty} from './utils';
 
@@ -155,7 +155,7 @@ class Unlocker {
         const modal=$('#ul-modal-content');
         const x=$('#ul-modal-close');
         const upload=$('#ul-modal-picture-upload');
-        const file=$('#ul-modal-picture-input');
+        const input=$('#ul-modal-picture-input');
         const signup=$('#ul-modal-signup');
 
         const open=this.openModal.bind(null, container);
@@ -166,8 +166,10 @@ class Unlocker {
         onClick(x, close);
         onClick(modal, e=>e.stopPropagation());
 
-        onClick(upload, ()=>file.click());
-        onClick(signup, this.signup);
+        onClick(upload, ()=>input.click());
+        onClick(signup, this.signup.bind(this));
+
+        input.addEventListener('change', this.handleInput.bind(this));
     }
 
     openModal(container){
@@ -184,13 +186,31 @@ class Unlocker {
         }, 200);
     }
 
+    handleInput(evt){
+        const self=this;
+        if (!self.reader){
+            self.reader=new FileReader();
+            self.reader.onload=e=>self.makePreview(e.target.result);
+        }
+        self.reader.readAsDataURL(evt.target.files[0]);
+    }
+
+    makePreview(src){
+        this.image=src;
+        const img=document.createElement('img');
+        img.id='ul-modal-picture-preview';
+        img.src=src;
+        const pic=$('#ul-modal-picture');
+        empty(pic);
+        pic.appendChild(img);
+    }
+
     signup(){
         const email=val('#ul-modal-email');
-        const picture='';
         fetch(url+'api/signup', {
             method: 'POST',
             headers: {'content-type': 'text/plain'},
-            body: JSON.stringify({email, picture})
+            body: JSON.stringify({email, image: this.image})
         });
     }
 }

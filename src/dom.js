@@ -10,6 +10,12 @@ function val(id){
     return document.querySelector(id).value;
 }
 
+function empty(elem){
+    while(elem.firstChild){
+        elem.removeChild(elem.firstChild);
+    }
+}
+
 function insertRules(rules){
     const style=document.createElement('style');
     style.appendChild(document.createTextNode(''));
@@ -41,6 +47,7 @@ function onEnter(id, action){
 export {
     find,
     val,
+    empty,
     insertRules,
     onClick,
     offClick,
