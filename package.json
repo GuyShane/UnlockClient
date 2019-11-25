@@ -33,6 +33,7 @@
         "url": "https://github.com/GuyShane/UnlockClient/issues"
     },
     "homepage": "https://github.com/GuyShane/UnlockClient#readme",
+    "browserslist": ["Chrome 78"],
     "devDependencies": {
         "mocha": "^6.2.2",
         "mocha-headless-chrome": "^2.0.3",

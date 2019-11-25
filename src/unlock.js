@@ -1,6 +1,7 @@
 import Socket from './socket';
 
 import * as dom from './dom';
+import * as camera from './camera';
 
 import {makeSchema, enforce} from './enforcer';
 import {normalize, alter} from './color';
@@ -134,8 +135,8 @@ class Unlocker {
         const modal=dom.$('#ul-modal-content');
         const x=dom.$('#ul-modal-close');
 
-        const open=this.openModal.bind(null, container);
-        const close=this.closeModal.bind(null, container);
+        const open=this.openModal.bind(this, container);
+        const close=this.closeModal.bind(this, container);
 
         dom.onClick(link, open);
         dom.onClick(overlay, close);
@@ -153,6 +154,9 @@ class Unlocker {
     }
 
     closeModal(container){
+        if (this.stream){
+            camera.stop(this.stream);
+        }
         container.classList.remove('ul-open');
         window.setTimeout(()=>{
             container.classList.add('ul-d-none');
@@ -213,9 +217,41 @@ class Unlocker {
     }
 
     makeCamera(){
-        const html='<div>Camera</div>';
-        const container=dom.$('#ul-modal-content');
-        dom.transition(container, html);
+        const icon='<svg width="25" height="18" viewBox="0 0 72 53" '+
+              'fill="none" stroke="white" stroke-width="6" '+
+              'xmlns="http://www.w3.org/2000/svg">'+
+              '<circle cx="36" cy="31" r="11.5"/>'+
+              '<path d="M2.5 15.5V47.5C2.5 '+
+              '49.1569 3.84315 50.5 5.5 50.5H66.5C68.1569 50.5 '+
+              '69.5 49.1569 69.5 47.5V15.5C69.5 13.8431 68.1569 '+
+              '12.5 66.5 12.5H52.5C50.8431 12.5 49.5 11.1569 '+
+              '49.5 9.5V5.5C49.5 3.84315 48.1569 2.5 46.5 '+
+              '2.5H25.5C23.8431 2.5 22.5 3.84315 22.5 5.5V9.5C22.5 '+
+              '11.1569 21.1569 12.5 19.5 12.5H5.5C3.84315 12.5 '+
+              '2.5 13.8431 2.5 15.5Z"/></svg>';
+        const html='<div id="ul-modal-camera">'+
+              '<video id="ul-modal-camera-video"></video>'+
+              '<canvas id="ul-modal-camera-canvas"></canvas>'+
+              '<button id="ul-modal-camera-take">'+icon+'</button>'+
+              '<div id="ul-modal-camera-close">&times</div>'+
+              '</div>';
+        const pic=dom.$('#ul-modal-picture');
+        dom.transition(pic, html, async ()=>{
+            const video=dom.$('#ul-modal-camera-video');
+            const canvas=dom.$('#ul-modal-camera-canvas');
+            const x=dom.$('#ul-modal-camera-close');
+            const take=dom.$('#ul-modal-camera-take');
+            this.stream=await camera.start(video);
+            dom.onClick(x, ()=>{
+                camera.stop(this.stream);
+                this.makePictureActions();
+            });
+            dom.onClick(take, ()=>{
+                const img=camera.capture(video, canvas);
+                camera.stop(this.stream);
+                this.makePreview(img);
+            });
+        });
     }
 
     makePreview(src){
