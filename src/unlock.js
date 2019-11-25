@@ -101,23 +101,6 @@ class Unlocker {
                     '<img id="ul-modal-logo" src="'+url+'images/unlock-icon.svg"></div>'+
                     '<div id="ul-modal-close">&times;</div>'+
                     '<div id="ul-modal-content">'+
-                    '<div id="ul-modal-title">Sign up for Unlock</div>'+
-                    '<div id="ul-modal-description">'+
-                    'Unlock allows you to sign up and log in '+
-                    'to web based applications without ever needing '+
-                    'a password. You need to create an Unlock account '+
-                    'once, and then you can use it on any participating '+
-                    'site or app. Learn more at '+
-                    '<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>'+
-                    '<input id="ul-modal-email" type="email" placeholder="Enter your email address">'+
-                    '<div id="ul-modal-picture"></div>'+
-                    '<div id="ul-modal-picture-description">'+
-                    '<div>*Make sure you use a picture that clearly shows your face, '+
-                    'and only contains you in it.</div>'+
-                    '<div>Your picture is never stored or shared with anyone. '+
-                    'It is converted into a number and then encrypted. The number is only '+
-                    'used when you log in to the Unlock website.</div></div>'+
-                    '<button id="ul-modal-signup">Sign up</button>'+
                     '</div></div></div>';
             }
             b.innerHTML=html;
@@ -145,14 +128,11 @@ class Unlocker {
     setupModal(){
         if (!this.opts.whatsThis){return;}
 
-        this.makePictureActions();
-
         const link=dom.$('#ul-link');
         const container=dom.$('#ul-modal');
         const overlay=dom.$('#ul-modal-overlay');
         const modal=dom.$('#ul-modal-content');
         const x=dom.$('#ul-modal-close');
-        const signup=dom.$('#ul-modal-signup');
 
         const open=this.openModal.bind(null, container);
         const close=this.closeModal.bind(null, container);
@@ -162,7 +142,7 @@ class Unlocker {
         dom.onClick(x, close);
         dom.onClick(modal, e=>e.stopPropagation());
 
-        dom.onClick(signup, this.signup.bind(this));
+        this.makeModalContent();
     }
 
     openModal(container){
@@ -188,7 +168,33 @@ class Unlocker {
         self.reader.readAsDataURL(evt.target.files[0]);
     }
 
-    makePictureActions(transition){
+    makeModalContent(){
+        const html='<div id="ul-modal-title">Sign up for Unlock</div>'+
+              '<div id="ul-modal-description">'+
+              'Unlock allows you to sign up and log in '+
+              'to web based applications without ever needing '+
+              'a password. You need to create an Unlock account '+
+              'once, and then you can use it on any participating '+
+              'site or app. Learn more at '+
+              '<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>'+
+              '<input id="ul-modal-email" type="email" placeholder="Enter your email address">'+
+              '<div id="ul-modal-picture"></div>'+
+              '<div id="ul-modal-picture-description">'+
+              '<div>*Make sure you use a picture that clearly shows your face, '+
+              'and only contains you in it.</div>'+
+              '<div>Your picture is never stored or shared with anyone. '+
+              'It is converted into a number and then encrypted. The number is only '+
+              'used when you log in to the Unlock website.</div></div>'+
+              '<button id="ul-modal-signup">Sign up</button>';
+        const container=dom.$('#ul-modal-content');
+        dom.transition(container, html, ()=>{
+            const signup=dom.$('#ul-modal-signup');
+            dom.onClick(signup, this.signup.bind(this));
+            this.makePictureActions();
+        });
+    }
+
+    makePictureActions(){
         this.image='';
         const html='<div id="ul-modal-picture-buttons">'+
               '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
@@ -197,11 +203,19 @@ class Unlocker {
               '</div><div id="ul-modal-picture-text">a picture of yourself*</div>';
         const pic=dom.$('#ul-modal-picture');
         dom.transition(pic, html, ()=>{
+            const take=dom.$('#ul-modal-picture-take');
             const upload=dom.$('#ul-modal-picture-upload');
             const input=dom.$('#ul-modal-picture-input');
+            dom.onClick(take, this.makeCamera.bind(this));
             dom.onClick(upload, ()=>input.click());
             input.addEventListener('change', this.handleInput.bind(this));
         });
+    }
+
+    makeCamera(){
+        const html='<div>Camera</div>';
+        const container=dom.$('#ul-modal-content');
+        dom.transition(container, html);
     }
 
     makePreview(src){
@@ -211,7 +225,7 @@ class Unlocker {
               '<div id="ul-modal-preview-close">&times;</div></div>';
         const pic=dom.$('#ul-modal-picture');
         dom.transition(pic, html, ()=>{
-            dom.onClick(dom.$('#ul-modal-preview-close'), this.makePictureActions.bind(this, true));
+            dom.onClick(dom.$('#ul-modal-preview-close'), this.makePictureActions.bind(this));
         });
     }
 
