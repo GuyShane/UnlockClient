@@ -216,7 +216,11 @@ class Unlocker {
         });
     }
 
-    makeCamera(){
+    async makeCamera(){
+        if (!await camera.hasCamera()){
+            alert('No camera detected on this device');
+            return;
+        }
         const icon='<svg width="25" height="18" viewBox="0 0 72 53" '+
               'fill="none" stroke="white" stroke-width="6" '+
               'xmlns="http://www.w3.org/2000/svg">'+
