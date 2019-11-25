@@ -142,8 +142,6 @@ class Unlocker {
         dom.onClick(overlay, close);
         dom.onClick(x, close);
         dom.onClick(modal, e=>e.stopPropagation());
-
-        this.makeModalContent();
     }
 
     openModal(container){
@@ -151,12 +149,14 @@ class Unlocker {
         window.setTimeout(()=>{
             container.classList.add('ul-open');
         });
+        this.makeModalContent();
     }
 
     closeModal(container){
         if (this.stream){
             camera.stop(this.stream);
         }
+        this.image='';
         container.classList.remove('ul-open');
         window.setTimeout(()=>{
             container.classList.add('ul-d-none');
@@ -191,7 +191,7 @@ class Unlocker {
               'used when you log in to the Unlock website.</div></div>'+
               '<button id="ul-modal-signup">Sign up</button>';
         const container=dom.$('#ul-modal-content');
-        dom.transition(container, html, ()=>{
+        dom.transition(container, html, false, ()=>{
             const signup=dom.$('#ul-modal-signup');
             dom.onClick(signup, this.signup.bind(this));
             this.makePictureActions();
@@ -206,7 +206,7 @@ class Unlocker {
               '<input id="ul-modal-picture-input" type="file" accept="image/*">'+
               '</div><div id="ul-modal-picture-text">a picture of yourself*</div>';
         const pic=dom.$('#ul-modal-picture');
-        dom.transition(pic, html, ()=>{
+        dom.transition(pic, html, true, ()=>{
             const take=dom.$('#ul-modal-picture-take');
             const upload=dom.$('#ul-modal-picture-upload');
             const input=dom.$('#ul-modal-picture-input');
@@ -240,7 +240,7 @@ class Unlocker {
               '<div id="ul-modal-camera-close">&times</div>'+
               '</div>';
         const pic=dom.$('#ul-modal-picture');
-        dom.transition(pic, html, async ()=>{
+        dom.transition(pic, html, true, async ()=>{
             const video=dom.$('#ul-modal-camera-video');
             const canvas=dom.$('#ul-modal-camera-canvas');
             const x=dom.$('#ul-modal-camera-close');
@@ -264,7 +264,7 @@ class Unlocker {
               '<img id="ul-modal-preview-picture" src="'+src+'">'+
               '<div id="ul-modal-preview-close">&times;</div></div>';
         const pic=dom.$('#ul-modal-picture');
-        dom.transition(pic, html, ()=>{
+        dom.transition(pic, html, true, ()=>{
             dom.onClick(dom.$('#ul-modal-preview-close'), this.makePictureActions.bind(this));
         });
     }

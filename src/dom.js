@@ -16,8 +16,8 @@ function empty(elem){
     }
 }
 
-function transition(container, html, after){
-    const delay=200;
+function transition(container, html, animate, after){
+    const delay=animate?200:0;
     container.classList.add('ul-invisible');
     setTimeout(()=>{
         empty(container);
