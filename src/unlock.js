@@ -13,7 +13,8 @@ export function init(opts){
     const unlocker=new Unlocker(opts);
 }
 
-const url='https://unlock-app.com/';
+//const url='https://unlock-app.com/';
+const url='http://localhost:3000/';
 
 class Unlocker {
     constructor(opts){
@@ -33,6 +34,7 @@ class Unlocker {
         dom.$(self.opts.email);
         dom.$('#unlock-button');
         self.opts.color=normalize(self.opts.color);
+        self.loading=false;
 
         self.socket=new Socket(self.opts.url, data=>{
             self.enableButton();
@@ -40,7 +42,6 @@ class Unlocker {
         });
 
         self.unlock=self._unlock.bind(self);
-
         self.buildButton();
         if (self.opts.submitOnEnter){
             dom.onEnter(self.opts.email, self.unlock);
@@ -189,6 +190,7 @@ class Unlocker {
               '<div>Your picture is never stored or shared with anyone. '+
               'It is converted into a number and then encrypted. The number is only '+
               'used when you log in to the Unlock website.</div></div>'+
+              '<div id="ul-modal-error"></div>'+
               '<button id="ul-modal-signup">Sign up</button>';
         const container=dom.$('#ul-modal-content');
         dom.transition(container, html, false, ()=>{
@@ -269,12 +271,24 @@ class Unlocker {
         });
     }
 
-    signup(){
+    async signup(){
+        if (this.loading){return;}
+        this.loading=true;
+        const error=dom.$('#ul-modal-error');
+        error.innerText='';
         const email=dom.val('#ul-modal-email');
-        fetch(url+'api/signup', {
+        const resp=await fetch(url+'api/signup', {
             method: 'POST',
-            headers: {'content-type': 'text/plain'},
+            headers: {'content-type': 'application/json'},
             body: JSON.stringify({email, image: this.image})
         });
+        this.loading=false;
+        if (resp.ok){
+
+        }
+        else {
+            const data=await resp.json();
+            error.innerText=data.message;
+        }
     }
 }
