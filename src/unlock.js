@@ -87,21 +87,21 @@ class Unlocker {
             b.parentNode.replaceChild(clone, b);
         }
         else {
-            let html='<button id="ul-button" class="ul-enabled">'+
-                '<img id="ul-logo" src="'+url+'images/unlock-logo-text.svg" alt="unlock">'+
-                '<span id="ul-cover"></span><div class="ul-spinner"><div class="ul-dot ul-dot-one">'+
-                '</div><div class="ul-dot ul-dot-two"></div><div class="ul-dot ul-dot-three">'+
-                '</div></div></button>';
+            let html="<button id='ul-button' class='ul-enabled'>"+
+                "<img id='ul-logo' src='"+url+"images/unlock-logo-text.svg' alt='unlock'>"+
+                "<span id='ul-cover'></span><div class='ul-spinner'><div class='ul-dot ul-dot-one'>"+
+                "</div><div class='ul-dot ul-dot-two'></div><div class='ul-dot ul-dot-three'>"+
+                "</div></div></button>";
             if (this.opts.whatsThis){
-                html+='<div id="ul-link">What\'s this?</div>'+
-                    '<div id="ul-modal" class="ul-d-none">'+
-                    '<div id="ul-modal-overlay"></div>'+
-                    '<div id="ul-modal-container">'+
-                    '<div id="ul-modal-logo-container">'+
-                    '<img id="ul-modal-logo" src="'+url+'images/unlock-icon.svg"></div>'+
-                    '<div id="ul-modal-close">&times;</div>'+
-                    '<div id="ul-modal-content">'+
-                    '</div></div></div>';
+                html+="<div id='ul-link'>What's this?</div>"+
+                    "<div id='ul-modal' class='ul-d-none'>"+
+                    "<div id='ul-modal-overlay'></div>"+
+                    "<div id='ul-modal-container'>"+
+                    "<div id='ul-modal-logo-container'>"+
+                    "<img id='ul-modal-logo' src='"+url+"images/unlock-icon.svg'></div>"+
+                    "<div id='ul-modal-close'>&times;</div>"+
+                    "<div id='ul-modal-content'>"+
+                    "</div></div></div>";
             }
             b.innerHTML=html;
         }
@@ -172,27 +172,27 @@ class Unlocker {
     }
 
     makeModalContent(){
-        const html='<div id="ul-modal-title">Sign up for Unlock</div>'+
-              '<div id="ul-modal-description">'+
-              'Unlock allows you to sign up and log in '+
-              'to web based applications without ever needing '+
-              'a password. You need to create an Unlock account '+
-              'once, and then you can use it on any participating '+
-              'site or app. Learn more at '+
-              '<a href="https://unlock-app.com" target="_blank">the Unlock website</a></div>'+
-              '<input id="ul-modal-email" type="email" placeholder="Enter your email address">'+
-              '<div id="ul-modal-picture"></div>'+
-              '<div id="ul-modal-picture-description">'+
-              '<div>*Make sure you use a picture that clearly shows your face, '+
-              'and only contains you in it.</div>'+
-              '<div>Your picture is never stored or shared with anyone. '+
-              'It is converted into a number and then encrypted. The number is only '+
-              'used when you log in to the Unlock website.</div></div>'+
-              '<div id="ul-modal-error"></div>'+
-              '<button id="ul-modal-signup" class="ul-enabled"><div id="ul-modal-signup-text">Sign up</div>'+
-              '<div class="ul-spinner"><div class="ul-dot ul-dot-one">'+
-              '</div><div class="ul-dot ul-dot-two"></div><div class="ul-dot ul-dot-three">'+
-              '</div></div></button>';
+        const html="<div id='ul-modal-title'>Sign up for Unlock</div>"+
+              "<div>"+
+              "Unlock allows you to sign up and log in "+
+              "to web based applications without ever needing "+
+              "a password. You need to create an Unlock account "+
+              "once, and then you can use it on any participating "+
+              "site or app. Learn more at "+
+              "<a href='https://unlock-app.com' target='_blank'>the Unlock website</a></div>"+
+              "<input id='ul-modal-email' type='email' placeholder='Enter your email address'>"+
+              "<div id='ul-modal-picture'></div>"+
+              "<div id='ul-modal-picture-description'>"+
+              "<div>*Make sure you use a picture that clearly shows your face, "+
+              "and only contains you in it.</div>"+
+              "<div>Your picture is never stored or shared with anyone. "+
+              "It is converted into a number and then encrypted. The number is only "+
+              "used when you log in to the Unlock website.</div></div>"+
+              "<div id='ul-modal-error'></div>"+
+              "<button id='ul-modal-signup' class='ul-enabled'><div id='ul-modal-signup-text'>Sign up</div>"+
+              "<div class='ul-spinner'><div class='ul-dot ul-dot-one'>"+
+              "</div><div class='ul-dot ul-dot-two'></div><div class='ul-dot ul-dot-three'>"+
+              "</div></div></button>";
         const container=dom.$('#ul-modal-content');
         dom.transition(container, html, false, ()=>{
             const signup=dom.$('#ul-modal-signup');
@@ -203,11 +203,11 @@ class Unlocker {
 
     makePictureActions(){
         this.image='';
-        const html='<div id="ul-modal-picture-buttons">'+
-              '<button id="ul-modal-picture-take" class="ul-button">Take</button>'+
-              ' or <button id="ul-modal-picture-upload" class="ul-button">upload</button>'+
-              '<input id="ul-modal-picture-input" type="file" accept="image/*">'+
-              '</div><div id="ul-modal-picture-text">a picture of yourself*</div>';
+        const html="<div id='ul-modal-picture-buttons'>"+
+              "<button id='ul-modal-picture-take' class='ul-button'>Take</button>"+
+              " or <button id='ul-modal-picture-upload' class='ul-button'>upload</button>"+
+              "<input id='ul-modal-picture-input' type='file' accept='image/*'>"+
+              "</div><div>a picture of yourself*</div>";
         const pic=dom.$('#ul-modal-picture');
         dom.transition(pic, html, true, ()=>{
             const take=dom.$('#ul-modal-picture-take');
@@ -224,24 +224,24 @@ class Unlocker {
             alert('No camera detected on this device');
             return;
         }
-        const icon='<svg width="25" height="18" viewBox="0 0 72 53" '+
-              'fill="none" stroke="white" stroke-width="6" '+
-              'xmlns="http://www.w3.org/2000/svg">'+
-              '<circle cx="36" cy="31" r="11.5"/>'+
-              '<path d="M2.5 15.5V47.5C2.5 '+
-              '49.1569 3.84315 50.5 5.5 50.5H66.5C68.1569 50.5 '+
-              '69.5 49.1569 69.5 47.5V15.5C69.5 13.8431 68.1569 '+
-              '12.5 66.5 12.5H52.5C50.8431 12.5 49.5 11.1569 '+
-              '49.5 9.5V5.5C49.5 3.84315 48.1569 2.5 46.5 '+
-              '2.5H25.5C23.8431 2.5 22.5 3.84315 22.5 5.5V9.5C22.5 '+
-              '11.1569 21.1569 12.5 19.5 12.5H5.5C3.84315 12.5 '+
-              '2.5 13.8431 2.5 15.5Z"/></svg>';
-        const html='<div id="ul-modal-camera">'+
-              '<video id="ul-modal-camera-video"></video>'+
-              '<canvas id="ul-modal-camera-canvas"></canvas>'+
-              '<button id="ul-modal-camera-take">'+icon+'</button>'+
-              '<div id="ul-modal-camera-close">&times</div>'+
-              '</div>';
+        const icon="<svg width='25' height='18' viewBox='0 0 72 53' "+
+              "fill='none' stroke='white' stroke-width='6' "+
+              "xmlns='http://www.w3.org/2000/svg'>"+
+              "<circle cx='36' cy='31' r='11.5'/>"+
+              "<path d='M2.5 15.5V47.5C2.5 "+
+              "49.1569 3.84315 50.5 5.5 50.5H66.5C68.1569 50.5 "+
+              "69.5 49.1569 69.5 47.5V15.5C69.5 13.8431 68.1569 "+
+              "12.5 66.5 12.5H52.5C50.8431 12.5 49.5 11.1569 "+
+              "49.5 9.5V5.5C49.5 3.84315 48.1569 2.5 46.5 "+
+              "2.5H25.5C23.8431 2.5 22.5 3.84315 22.5 5.5V9.5C22.5 "+
+              "11.1569 21.1569 12.5 19.5 12.5H5.5C3.84315 12.5 "+
+              "2.5 13.8431 2.5 15.5Z'/></svg>";
+        const html="<div id='ul-modal-camera'>"+
+              "<video id='ul-modal-camera-video'></video>"+
+              "<canvas id='ul-modal-camera-canvas'></canvas>"+
+              "<button id='ul-modal-camera-take'>"+icon+"</button>"+
+              "<div id='ul-modal-camera-close'>&times</div>"+
+              "</div>";
         const pic=dom.$('#ul-modal-picture');
         dom.transition(pic, html, true, async ()=>{
             const video=dom.$('#ul-modal-camera-video');
@@ -263,9 +263,9 @@ class Unlocker {
 
     makePreview(src){
         this.image=src;
-        const html='<div id="ul-modal-preview">'+
-              '<img id="ul-modal-preview-picture" src="'+src+'">'+
-              '<div id="ul-modal-preview-close">&times;</div></div>';
+        const html="<div id='ul-modal-preview'>"+
+              "<img id='ul-modal-preview-picture' src='"+src+"'>"+
+              "<div id='ul-modal-preview-close'>&times;</div></div>";
         const pic=dom.$('#ul-modal-picture');
         dom.transition(pic, html, true, ()=>{
             dom.onClick(dom.$('#ul-modal-preview-close'), this.makePictureActions.bind(this));
@@ -273,7 +273,7 @@ class Unlocker {
     }
 
     makeSuccess(){
-        const html='<div>Success</div>';
+        const html="<div>Success</div>";
         const container=dom.$('#ul-modal-content');
         dom.transition(container, html, true, ()=>{});
     }
