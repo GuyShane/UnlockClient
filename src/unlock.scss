@@ -32,10 +32,50 @@ $delay-three: $duration*0.67;
     display: inline-block;
     color: white;
     font-family: sans-serif;
+    button {
+        .ul-spinner {
+            @include size($dot-size);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.2s;
+            .ul-dot {
+                @include size($dot-size);
+                border-radius: 50%;
+                background-color: #fff;
+                position: absolute;
+                left: 0px;
+            }
+            .ul-dot-one {
+                animation: move $duration ease-in-out 0s infinite normal;
+            }
+            .ul-dot-two {
+                animation: move $duration ease-in-out $delay-two infinite normal;
+                animation-fill-mode: backwards;
+            }
+            .ul-dot-three {
+                animation: move $duration ease-in-out $delay-three infinite normal;
+                animation-fill-mode: backwards;
+            }
+        }
+        &.ul-enabled {
+            .ul-spinner {
+                opacity: 0;
+            }
+        }
+        &.ul-disabled {
+            .ul-spinner {
+                opacity: 1;
+            }
+        }
+    }
     #ul-button {
         position: relative;
         background-color: transparent;
         padding: 7px 17px;
+        border: none;
+        outline: none;
         border-radius: 8px;
         #ul-logo {
             width: 77px;
@@ -50,45 +90,13 @@ $delay-three: $duration*0.67;
             border-radius: 8px;
             transition: opacity 0.2s;
         }
-        #ul-spinner {
-            @include size($dot-size);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.2s;
-            .ul-dot {
-                @include size($dot-size);
-                border-radius: 50%;
-                background-color: #fff;
-                position: absolute;
-                left: 0px;
-            }
-            #ul-dot-one {
-                animation: move $duration ease-in-out 0s infinite normal;
-            }
-            #ul-dot-two {
-                animation: move $duration ease-in-out $delay-two infinite normal;
-                animation-fill-mode: backwards;
-            }
-            #ul-dot-three {
-                animation: move $duration ease-in-out $delay-three infinite normal;
-                animation-fill-mode: backwards;
-            }
-        }
         &.ul-enabled {
             #ul-cover {
-                opacity: 0;
-            }
-            #ul-spinner {
                 opacity: 0;
             }
         }
         &.ul-disabled {
             #ul-cover {
-                opacity: 1;
-            }
-            #ul-spinner {
                 opacity: 1;
             }
         }
@@ -281,6 +289,7 @@ $delay-three: $duration*0.67;
                     margin-top: 10px;
                 }
                 #ul-modal-signup {
+                    position: relative;
                     margin-top: 15px;
                     background: linear-gradient(#3abd67, #45de79);
                     &:hover {
@@ -294,6 +303,16 @@ $delay-three: $duration*0.67;
                             darken(#3abd67, 8%),
                             darken(#45de79, 8%)
                         );
+                    }
+                    &.ul-enabled {
+                        #ul-modal-signup-text {
+                            opacity: 1;
+                        }
+                    }
+                    &.ul-disabled {
+                        #ul-modal-signup-text {
+                            opacity: 0;
+                        }
                     }
                 }
             }

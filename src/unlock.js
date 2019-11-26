@@ -89,11 +89,11 @@ class Unlocker {
             b.parentNode.replaceChild(clone, b);
         }
         else {
-            let html='<div id="ul-button" class="ul-enabled">'+
+            let html='<button id="ul-button" class="ul-enabled">'+
                 '<img id="ul-logo" src="'+url+'images/unlock-logo-text.svg" alt="unlock">'+
-                '<span id="ul-cover"></span><div id="ul-spinner"><div id="ul-dot-one" class="ul-dot">'+
-                '</div><div id="ul-dot-two" class="ul-dot"></div><div id="ul-dot-three" class="ul-dot">'+
-                '</div></div></div>';
+                '<span id="ul-cover"></span><div class="ul-spinner"><div class="ul-dot ul-dot-one">'+
+                '</div><div class="ul-dot ul-dot-two"></div><div class="ul-dot ul-dot-three">'+
+                '</div></div></button>';
             if (this.opts.whatsThis){
                 html+='<div id="ul-link">What\'s this?</div>'+
                     '<div id="ul-modal" class="ul-d-none">'+
@@ -191,7 +191,10 @@ class Unlocker {
               'It is converted into a number and then encrypted. The number is only '+
               'used when you log in to the Unlock website.</div></div>'+
               '<div id="ul-modal-error"></div>'+
-              '<button id="ul-modal-signup">Sign up</button>';
+              '<button id="ul-modal-signup" class="ul-enabled"><div id="ul-modal-signup-text">Sign up</div>'+
+              '<div class="ul-spinner"><div class="ul-dot ul-dot-one">'+
+              '</div><div class="ul-dot ul-dot-two"></div><div class="ul-dot ul-dot-three">'+
+              '</div></div></button>';
         const container=dom.$('#ul-modal-content');
         dom.transition(container, html, false, ()=>{
             const signup=dom.$('#ul-modal-signup');
@@ -274,8 +277,11 @@ class Unlocker {
     async signup(){
         if (this.loading){return;}
         this.loading=true;
+        const signup=dom.$('#ul-modal-signup');
         const error=dom.$('#ul-modal-error');
         error.innerText='';
+        signup.classList.remove('ul-enabled');
+        signup.classList.add('ul-disabled');
         const email=dom.val('#ul-modal-email');
         const resp=await fetch(url+'api/signup', {
             method: 'POST',
@@ -283,6 +289,8 @@ class Unlocker {
             body: JSON.stringify({email, image: this.image})
         });
         this.loading=false;
+        signup.classList.remove('ul-disabled');
+        signup.classList.add('ul-enabled');
         if (resp.ok){
 
         }
