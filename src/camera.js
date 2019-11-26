@@ -1,5 +1,5 @@
 async function hasCamera(){
-    const media=window.navigator.mediaDevices;
+    const media=navigator.mediaDevices;
     if (!media || !media.enumerateDevices){return false;}
     const devices=await media.enumerateDevices();
     return devices.some(d=>d.kind==='videoinput');

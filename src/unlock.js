@@ -10,7 +10,7 @@ import {isEmpty} from './utils';
 import './unlock.scss';
 
 export function init(opts){
-    const unlocker=new Unlocker(opts);
+    new Unlocker(opts);
 }
 
 //const url='https://unlock-app.com/';
@@ -66,8 +66,7 @@ class Unlocker {
     }
 
     enableButton(){
-        const b=dom.$('#unlock-button')
-              .querySelector('#ul-button');
+        const b=dom.$('#ul-button');
         dom.offClick(b, this.unlock);
         dom.onClick(b, this.unlock);
         b.classList.remove('ul-disabled');
@@ -75,8 +74,7 @@ class Unlocker {
     }
 
     disableButton(){
-        const b=dom.$('#unlock-button')
-              .querySelector('#ul-button');
+        const b=dom.$('#ul-button');
         dom.offClick(b, this.unlock);
         b.classList.remove('ul-enabled');
         b.classList.add('ul-disabled');
@@ -119,7 +117,7 @@ class Unlocker {
         const styles=[
             `#unlock-button #ul-button {background-color: ${bg}}`,
             `#unlock-button #ul-button.ul-enabled:hover {background-color: ${light}}`,
-            `#unlock-button #ul-button.ul-enabled:active {background-color: ${dark}}`,
+            `#unlock-button #ul-button.ul-enabled:active {background-color: ${dark}}`
         ];
         if (this.opts.whatsThis){
             styles.push(`#unlock-button #ul-link {color: ${bg}}`);
@@ -274,6 +272,12 @@ class Unlocker {
         });
     }
 
+    makeSuccess(){
+        const html='<div>Success</div>';
+        const container=dom.$('#ul-modal-content');
+        dom.transition(container, html, true, ()=>{});
+    }
+
     async signup(){
         if (this.loading){return;}
         this.loading=true;
@@ -292,7 +296,7 @@ class Unlocker {
         signup.classList.remove('ul-disabled');
         signup.classList.add('ul-enabled');
         if (resp.ok){
-
+            this.makeSuccess();
         }
         else {
             const data=await resp.json();

@@ -14,8 +14,9 @@
     "main": "dist/unlock.js",
     "scripts": {
         "test": "npm run test:lib; npm run test:min",
-        "test:lib": "./node_modules/mocha-headless-chrome/bin/start -f ./test/index.html",
-        "test:min": "./node_modules/mocha-headless-chrome/bin/start -f ./test/min.html",
+        "test:lib": "mocha-headless-chrome -f ./test/index.html",
+        "test:min": "mocha-headless-chrome -f ./test/min.html",
+        "lint:src": "eslint src/*.js -c .eslint.json",
         "clean": "rm -rf  dist",
         "dev": "parcel watch src/unlock.js --no-hmr --global Unlock",
         "build": "npm run clean; parcel build src/unlock.js --experimental-scope-hoisting --global Unlock",
@@ -33,8 +34,11 @@
         "url": "https://github.com/GuyShane/UnlockClient/issues"
     },
     "homepage": "https://github.com/GuyShane/UnlockClient#readme",
-    "browserslist": ["Chrome 78"],
+    "browserslist": [
+        "Chrome 78"
+    ],
     "devDependencies": {
+        "eslint": "^6.7.1",
         "mocha": "^6.2.2",
         "mocha-headless-chrome": "^2.0.3",
         "parcel-bundler": "^1.12.4",

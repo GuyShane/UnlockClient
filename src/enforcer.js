@@ -36,10 +36,6 @@ function enforce(obj, schema){
     return ret;
 }
 
-function isEmpty(obj){
-    return Object.keys(obj).length===0;
-}
-
 export {
     makeSchema,
     enforce
