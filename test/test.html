@@ -1,23 +1,27 @@
-<!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="../dist/unlock.css">
+    <title>Tests for unlock client</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <link rel="stylesheet" href="../dist/unlock.css" />
   </head>
   <body>
-    <div>
-      <input type="email" id="email"/>
-    </div>
+    <div id="mocha"></div>
+    <input type="email" id="email" />
     <div id="unlock-button"></div>
-    <script src="../dist/unlock.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="../node_modules/lodash/lodash.js"></script>
     <script>
-      Unlock.init({
-          url: 'ws://localhost:3456',
-          email: '#email',
-          onMessage: function(msg){
-              console.log(msg);
-          },
-          whatsThis: true
-      });
+      mocha.setup('bdd');
+      var expect=chai.expect;
+    </script>
+    <script src="../dist/unlock.js"></script>
+    <script src="./test.js"></script>
+    <script>
+      mocha.run();
     </script>
   </body>
 </html>

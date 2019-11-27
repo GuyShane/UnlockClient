@@ -6,10 +6,7 @@ const ws=new WebSocket.Server({
 
 ws.on('connection', (socket)=>{
     socket.on('message', (msg)=>{
-        if (msg==='close'){
-            socket.close();
-            return;
-        }
         socket.send(msg);
+        socket.close();
     });
 });

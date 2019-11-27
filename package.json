@@ -13,12 +13,14 @@
     ],
     "main": "dist/unlock.js",
     "scripts": {
-        "test": "mocha-headless-chrome -f ./test/index.html",
-        "lint:src": "eslint src/*.js -c .eslint.json",
-        "clean": "rm -rf  dist",
         "dev": "parcel watch src/unlock.js --no-hmr --global Unlock",
         "build": "run-s clean build:*",
         "build:package": "parcel build src/unlock.js --experimental-scope-hoisting --global Unlock",
+        "build:obfuscate": "python3 obfuscate.py",
+        "test": "run-s echo test:run echo:stop",
+        "test:run": "mocha-headless-chrome -f ./test/test.html",
+        "lint": "eslint src/*.js -c .eslint.json",
+        "clean": "rm -rf  dist",
         "echo": "npm-run-all echo:*",
         "echo:stop": "pkill -f 'node test/echo'",
         "echo:start": "node test/echo.js &"
@@ -37,12 +39,16 @@
         "Chrome 78"
     ],
     "devDependencies": {
+        "chai": "^4.2.0",
         "eslint": "^6.7.1",
+        "jquery": "^3.4.1",
+        "lodash": "^4.17.15",
         "mocha": "^6.2.2",
         "mocha-headless-chrome": "^2.0.3",
         "npm-run-all": "^4.1.5",
         "parcel-bundler": "^1.12.4",
         "sass": "^1.23.7",
+        "sinon": "^7.5.0",
         "ws": "^7.2.0"
     },
     "dependencies": {}

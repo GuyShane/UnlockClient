@@ -72,10 +72,9 @@ I would be happy to review pull requests to increase compatibility or start anot
 Clone the repo and run
 ```
 npm install
-npm run echo:start
 npm test
 ```
-echo:start starts a simple node WebSocket server on localhost:3456 for use with the tests
+This will start an echo WebSocket server on localhost:3456 and stop it once the tests are finished
 
 ### License
 [MIT](https://opensource.org/licenses/MIT)
