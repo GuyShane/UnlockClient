@@ -13,8 +13,9 @@ export function init(opts){
     new Unlocker(opts);
 }
 
-//const url='https://unlock-app.com/';
-const url='http://localhost:3000/';
+const url='https://unlock-app.com/';
+const androidUrl='https://play.google.com/store/apps/details?id=com.unlockauth.unlock';
+const iosUrl='https://apps.apple.com/ca/app/unlock-authentication/id1380362354';
 
 class Unlocker {
     constructor(opts){
@@ -172,7 +173,7 @@ class Unlocker {
     }
 
     makeModalContent(){
-        const html="<div id='ul-modal-title'>Sign up for Unlock</div>"+
+        const html="<div class='ul-modal-title'>Sign up for Unlock</div>"+
               "<div>"+
               "Unlock allows you to sign up and log in "+
               "to web based applications without ever needing "+
@@ -273,7 +274,14 @@ class Unlocker {
     }
 
     makeSuccess(){
-        const html="<div>Success</div>";
+        const html="<div id='ul-modal-success'><div class='ul-modal-title'>"+
+              "Signup complete!</div><div>You now have an Unlock account, and can access "+
+              "all participating sites without ever needing a password.</div>"+
+              "<div>You should have received a verification email. Once you "+
+              "confirm your email you can start using Unlock.</div>"+
+              "<div>You can start right away by receiving Unlock requests to your email, "+
+              "but you can also download the app for <a href='"+androidUrl+"' target='_blank'>Android</a> "+
+              "or <a href='"+iosUrl+"' target='_blank'>iOS</a> at any time.</div></div>";
         const container=dom.$('#ul-modal-content');
         dom.transition(container, html, true, ()=>{});
     }

@@ -173,7 +173,7 @@ $delay-three: $duration*0.67;
             }
             #ul-modal-content {
                 text-align: center;
-                color: #b0b0b0;
+                color: #aaa;
                 width: 90%;
                 margin: -35px auto 20px;
                 a {
@@ -204,7 +204,7 @@ $delay-three: $duration*0.67;
                         );
                     }
                 }
-                #ul-modal-title {
+                .ul-modal-title {
                     font-size: 30px;
                     color: #444;
                     margin-bottom: 15px;
@@ -313,6 +313,11 @@ $delay-three: $duration*0.67;
                         #ul-modal-signup-text {
                             opacity: 0;
                         }
+                    }
+                }
+                #ul-modal-success {
+                    div:not(:first-child) {
+                        margin-top: 15px;
                     }
                 }
             }
