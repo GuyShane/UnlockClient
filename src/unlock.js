@@ -10,7 +10,7 @@ import {isEmpty} from './utils';
 import './unlock.scss';
 
 export function init(opts){
-    new Unlocker(opts);
+    return new Unlocker(opts);
 }
 
 const url='https://unlock-app.com/';

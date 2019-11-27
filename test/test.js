@@ -66,15 +66,6 @@ describe('Unlock client tests', function(){
             })).to.throw();
         });
 
-        it('should fail if button is passed and is not a boolean', function(){
-            expect(Unlock.bind(undefined, {
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(){},
-                button: 'false'
-            })).to.throw();
-        });
-
         it('should fail if submitOnEnter is passed and is not a boolean', function(){
             expect(Unlock.bind(undefined, {
                 url: 'ws://localhost:3456',
@@ -90,33 +81,6 @@ describe('Unlock client tests', function(){
                 email: '#email',
                 onMessage: function(){},
                 color: 0x2311f6
-            })).to.throw();
-        });
-
-        it('should fail if onSend is passed and is not a function', function(){
-            expect(Unlock.bind(undefined, {
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(){},
-                onSend: {}
-            })).to.throw();
-        });
-
-        it('should fail if onOpen is passed and is not a function', function(){
-            expect(Unlock.bind(undefined, {
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(){},
-                onOpen: 'open'
-            })).to.throw();
-        });
-
-        it('should fail if onClose is passed and is not a function', function(){
-            expect(Unlock.bind(undefined, {
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(){},
-                onClose: false
             })).to.throw();
         });
 
@@ -703,128 +667,6 @@ describe('Unlock client tests', function(){
                 u.enableButton();
                 u.enableButton();
             });
-        });
-
-        describe('disableButton()', function(){
-            it('should do nothing if button is false', function(){
-                var u=new Unlock({
-                    url: 'ws://localhost:3456',
-                    email: '#email',
-                    onMessage: function(){},
-                    button: false
-                });
-                var docSpy=sinon.spy(document, 'getElementById');
-                u.disableButton();
-                expect(docSpy.called).to.equal(false);
-                document.getElementById.restore();
-            });
-
-            it('should give the button the class "unlock-disabled" and remove class "unlock-enabled"', function(){
-                var u=new Unlock({
-                    url: 'ws://localhost:3456',
-                    email: '#email',
-                    onMessage: function(){}
-                });
-                u.disableButton();
-                var button=$('#unlock-button .unlock-button');
-                expect(button.hasClass('unlock-disabled')).to.equal(true);
-                expect(button.hasClass('unlock-enabled')).to.equal(false);
-            });
-
-            it('should remove click listener from button', function(done){
-                var submitStub=sinon.stub(Unlock.prototype, '_submit').returns();
-                var u=new Unlock({
-                    url: 'ws://localhost:3456',
-                    email: '#email',
-                    onMessage: function(){},
-                    onOpen: function(){
-                        u.disableButton();
-                        $('#unlock-button .unlock-button').click();
-                        expect(submitStub.called).to.equal(false);
-                        Unlock.prototype._submit.restore();
-                        done();
-                    }
-                });
-            });
-        });
-    });
-
-    describe('unlock()', function(){
-        it('should send data with type "unlock"', function(done){
-            var u=new Unlock({
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(data){
-                    expect(data.type).to.equal('unlock');
-                    done();
-                },
-                onOpen: function(){
-                    u.unlock();
-                }
-            });
-        });
-
-        it('should send data with whatever is typed in the email field', function(done){
-            $('#email').val('test@email.com');
-            var u=new Unlock({
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(data){
-                    expect(data.email).to.equal('test@email.com');
-                    done();
-                },
-                onOpen: function(){
-                    u.unlock();
-                }
-            });
-        });
-
-        it('should send data specified in extra', function(done){
-            var u=new Unlock({
-                url: 'ws://localhost:3456',
-                email: '#email',
-                extra: {
-                    data: true
-                },
-                onMessage: function(data){
-                    expect(data.extra.data).to.equal(true);
-                    done();
-                },
-                onOpen: function(){
-                    u.unlock();
-                }
-            });
-        });
-
-        it('should not override type or email', function(done){
-            var u=new Unlock({
-                url: 'ws://localhost:3456',
-                email: '#email',
-                extra: {
-                    type: 'other',
-                    email: 'oopsies'
-                },
-                onMessage: function(data){
-                    expect(data.type).to.equal('unlock');
-                    expect(data.email).to.equal('test@email.com');
-                    done();
-                },
-                onOpen: function(){
-                    u.unlock();
-                }
-            });
-        });
-    });
-
-    describe('_getEmail()', function(){
-        it('should return whatever is in the email field', function(){
-            $('#email').val('user@gmail.com');
-            var u=new Unlock({
-                url: 'ws://localhost:3456',
-                email: '#email',
-                onMessage: function(){}
-            });
-            expect(u._getEmail()).to.equal('user@gmail.com');
         });
     });
 });

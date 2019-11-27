@@ -13,9 +13,7 @@
     ],
     "main": "dist/unlock.js",
     "scripts": {
-        "test": "npm-run-all test:*",
-        "test:lib": "mocha-headless-chrome -f ./test/index.html",
-        "test:min": "mocha-headless-chrome -f ./test/min.html",
+        "test": "mocha-headless-chrome -f ./test/index.html",
         "lint:src": "eslint src/*.js -c .eslint.json",
         "clean": "rm -rf  dist",
         "dev": "parcel watch src/unlock.js --no-hmr --global Unlock",
