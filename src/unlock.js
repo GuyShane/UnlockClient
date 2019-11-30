@@ -57,7 +57,7 @@ class Unlocker {
         if (this.email===''){return;}
         this.disableButton();
         const data={
-            type: 'Unlock',
+            type: 'unlock',
             email: this.email
         };
         if (!isEmpty(this.opts.extra)){
