@@ -66,6 +66,7 @@ This library uses some modern features that browsers like IE11 don't support:
 - [fetch](https://caniuse.com/#feat=fetch)
 - [async/await](https://caniuse.com/#feat=async-functions)
 - [WebSockets](https://caniuse.com/#feat=websockets)
+
 I would be happy to review pull requests to increase compatibility or start another repo for legacy browsers.
 
 ### Running tests

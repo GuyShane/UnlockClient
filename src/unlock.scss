@@ -29,6 +29,16 @@ $delay-three: $duration*0.67;
 }
 
 #unlock-button {
+    box-sizing: border-box;
+    font-size: 16px;
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
     display: inline-block;
     color: white;
     font-family: sans-serif;
@@ -131,6 +141,7 @@ $delay-three: $duration*0.67;
             top: 0;
             @include size(100%);
             background: rgba(0, 0, 0, 0.4);
+            z-index: 9999;
         }
         #ul-modal-container {
             position: absolute;
@@ -143,9 +154,10 @@ $delay-three: $duration*0.67;
             width: 85%;
             max-width: 450px;
             margin-bottom: 20px;
+            z-index: 10000;
             #ul-modal-logo-container {
                 position: relative;
-                display: inline-block;
+                display: block;
                 left: 50%;
                 top: 0;
                 transform: translate(-50%, -45%);
@@ -155,6 +167,7 @@ $delay-three: $duration*0.67;
                 box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
                 #ul-modal-logo {
                     position: relative;
+                    display: block;
                     left: 50%;
                     top: 50%;
                     transform: translate(-50%, -50%);
